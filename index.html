@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Prépa OFII">
+<meta name="theme-color" content="#F4F6FB">
+<title>Prépa OFII &amp; TCF A2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6FB;--ink:#172033;--muted:#5A6478;--pri:#2B46C9;--pri-d:#1E3399;--pri-s:#E7ECFF;--line:#E3E8F2;--ok:#1B7A50;--ok-s:#E6F4EC;--ok-d:#14583A;--bad:#C8323A;--bad-s:#FBE9EA;--warm:#FFF4D6;--warm-d:#7A3E06;--rec:#E0473A;--dark:#172033}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;cursor:pointer;-webkit-appearance:none;appearance:none}
+#app{max-width:820px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) 22px 130px}
+@media(min-width:700px){#app{padding-left:48px;padding-right:48px;padding-top:calc(40px + env(safe-area-inset-top))}}
+#app.focus{padding-bottom:48px}
+nav#nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:8px 16px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);z-index:10}
+nav#nav .in{display:contents}
+nav#nav button{background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;font-size:13px;font-weight:600;min-height:58px}
+nav#nav button.on{color:var(--pri);font-weight:800}
+nav#nav.hide{display:none}
+.stack{display:flex;flex-direction:column;gap:20px}
+.stack.s{gap:12px}
+.card{background:#fff;border-radius:24px;padding:24px 26px}
+.row{display:flex;align-items:center;gap:14px}
+.row.wrap{flex-wrap:wrap}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+h1{margin:0;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+h2{margin:0;font-size:21px;font-weight:800;line-height:1.3}
+h2.q{font-size:26px;letter-spacing:-.01em}
+h3{margin:0;font-size:18px;font-weight:800}
+p{margin:0;line-height:1.5}
+.muted{color:var(--muted)}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pri)}
+.btn{border:none;border-radius:16px;padding:0 22px;min-height:56px;font-size:17px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:var(--ink);text-align:center}
+.btn.pri{background:var(--pri);color:#fff}
+.btn.big{min-height:68px;font-size:19px;font-weight:800;border-radius:20px;width:100%}
+.btn.ghost{border:1.5px solid #C9D2E8}
+.btn.soft{background:var(--pri-s);color:var(--pri)}
+.btn.dark{background:var(--dark);color:#fff}
+.btn.light{background:#fff;color:var(--ink)}
+.btn.line-w{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+.btn.danger{color:var(--bad);border:1.5px solid #F0C4C7}
+.btn.full{width:100%}
+.btn:disabled{opacity:.45}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 16px;font-size:14px;font-weight:800;background:var(--pri-s);color:var(--pri)}
+.chip.o{background:#FDEBDD;color:#8A3D0B}
+.chip.g{background:var(--ok-s);color:var(--ok-d)}
+.chip.w{background:#fff;color:var(--muted);font-weight:700}
+.back{background:none;border:none;color:var(--pri);font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:10px 0;min-height:44px}
+.hero{background:var(--pri);color:#fff;border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.step{border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.12);color:#fff;border:none;text-align:left;width:100%;font-size:inherit;min-height:64px}
+.step.cur{background:#fff;color:var(--ink)}
+.step .n{width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;border:2px solid rgba(255,255,255,.6)}
+.step.cur .n{background:var(--pri-s);color:var(--pri);border:none}
+.step.done .n{background:#fff;color:var(--ok);border:none}
+.step .t{font-size:17px;font-weight:700;display:block}
+.step .s{font-size:14px;color:rgba(255,255,255,.88);display:block;margin-top:2px}
+.step.cur .s{color:var(--muted)}
+.step .go{margin-left:auto;background:var(--pri);color:#fff;border-radius:12px;padding:10px 16px;font-size:15px;font-weight:700;flex-shrink:0}
+.bar{height:10px;background:#E9EDF5;border-radius:999px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--pri);border-radius:999px}
+.progress{height:12px;background:var(--line);border-radius:999px;flex:1;overflow:hidden}.progress>i{display:block;height:100%;background:var(--pri);border-radius:999px;transition:width .3s}
+.iconbtn{width:48px;height:48px;border-radius:999px;background:#fff;color:var(--ink);border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opts{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.opts{grid-template-columns:1fr 1fr}}
+.opt{width:100%;text-align:left;min-height:68px;border-radius:18px;border:2px solid var(--line);background:#fff;color:var(--ink);font-size:19px;font-weight:700;padding:12px 18px;display:flex;align-items:center;gap:14px;line-height:1.3}
+.opt .l{width:32px;height:32px;border-radius:10px;background:var(--bg);font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt.ok{border-color:var(--ok);background:var(--ok-s);color:var(--ok-d)}.opt.ok .l{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-s);color:#8E1F26}.opt.bad .l{background:var(--bad);color:#fff}
+.opt.sm{min-height:56px;font-size:18px;justify-content:center;text-align:center}
+.doc{background:#FFFDF6;border:2px solid #EADFC0;border-radius:18px;padding:20px 22px;font-size:18px;line-height:1.55;white-space:pre-line}
+.doc .dk{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7A5C0E;margin-bottom:6px;display:block;white-space:normal}
+.fb{border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+.fb.ok{background:var(--ok-s);color:#1F3B2E}.fb.bad{background:var(--bad-s);color:#5A1A1F}
+.fb .h{font-size:20px;font-weight:800}
+.fb .lnk{background:none;border:none;padding:6px 0;font-size:16px;font-weight:700;color:inherit;text-decoration:underline;text-align:left;align-self:flex-start;min-height:44px}
+.player{display:flex;flex-direction:column;align-items:center;gap:20px}
+.playbig{width:112px;height:112px;border-radius:999px;border:none;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 14px var(--pri-s)}
+.seg{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.seg button{border:none;border-radius:14px;padding:10px 18px;font-size:16px;font-weight:700;background:var(--bg);color:var(--ink);min-height:48px}
+.seg button.on{background:var(--dark);color:#fff}
+textarea,input[type=text],input[type=date]{font-family:inherit;font-size:18px;line-height:1.5;color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:14px 16px;background:#FAFBFD;width:100%;-webkit-appearance:none;appearance:none}
+input[type=date]{min-height:56px}
+textarea{resize:vertical;min-height:130px}
+textarea:focus,input:focus{outline:none;border-color:var(--pri)}
+:focus-visible{outline:3px solid #7F95F0;outline-offset:2px}
+.tip{display:flex;gap:10px;align-items:flex-start;background:var(--warm);color:var(--warm-d);border-radius:14px;padding:12px 14px;font-size:15px;font-weight:600;line-height:1.45}
+.tip svg{flex-shrink:0;margin-top:1px}
+.recbox{background:var(--dark);color:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.recbtn{width:96px;height:96px;border-radius:999px;border:none;background:var(--rec);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 12px rgba(224,71,58,.25)}
+.recbtn.on{animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(224,71,58,.55)}100%{box-shadow:0 0 0 24px rgba(224,71,58,0)}}
+.rect{font-size:24px;font-weight:800}
+.recbox small{font-size:15px;color:#C9D2E8}
+.model{background:var(--pri-s);border-radius:18px;padding:18px 20px;font-size:17px;line-height:1.6;color:#1B2A6B;display:flex;gap:14px;align-items:flex-start}
+.ex{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid #EEF1F7;font-size:18px;font-weight:600;line-height:1.4}
+.ex:last-child{border-bottom:none}
+.ibtn{width:44px;height:44px;border-radius:999px;border:none;background:var(--pri-s);color:var(--pri);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ibtn.pri{background:var(--pri);color:#fff}
+.num{width:28px;height:28px;border-radius:10px;background:var(--pri-s);color:var(--pri);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ess{display:flex;gap:14px;align-items:flex-start;font-size:17px;line-height:1.5}
+.retenir{background:var(--dark);color:#fff;border-radius:24px;padding:22px 26px;display:flex;gap:16px;align-items:center}
+.retenir .kicker{color:#F2A93B}
+.retenir p{font-size:20px;font-weight:700;line-height:1.45;margin-top:6px}
+.grid2{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.grid4{grid-template-columns:repeat(4,1fr)}}
+.grid3{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.grid3{grid-template-columns:repeat(3,1fr)}}
+.stat{background:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.stat span{font-size:14px;font-weight:600;color:var(--muted)}.stat b{font-size:26px;font-weight:800}
+.fcard{background:#fff;border:none;border-radius:20px;padding:16px 18px;text-align:left;display:flex;align-items:center;gap:14px;width:100%;color:var(--ink);font-size:inherit;min-height:72px}
+.fcard .fn{width:44px;height:44px;border-radius:14px;background:var(--pri-s);color:var(--pri);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fcard.done .fn{background:var(--ok-s);color:var(--ok)}
+.fcard b{display:block;font-size:17px}.fcard small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.helpers{display:flex;flex-wrap:wrap;gap:10px}
+.helpers span{background:var(--pri-s);color:var(--pri-d);border-radius:12px;padding:10px 14px;font-size:16px;font-weight:700}
+.urg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.urg div{border:2px solid var(--line);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center}
+.urg b{font-size:22px;color:var(--bad)}.urg span{font-size:13px;font-weight:600;color:var(--muted)}
+.scene{background:#fff;border-radius:24px;padding:12px}
+.scene svg{width:100%;height:auto;display:block;border-radius:16px}
+#toast{position:fixed;left:16px;right:16px;margin:0 auto;bottom:calc(104px + env(safe-area-inset-bottom));transform:translateY(20px);background:var(--dark);color:#fff;padding:14px 20px;border-radius:16px;font-weight:600;font-size:16px;opacity:0;pointer-events:none;transition:.25s;width:fit-content;max-width:560px;z-index:50;text-align:center;line-height:1.4}
+#toast.on{opacity:1;transform:translateY(0)}
+@media(max-width:560px){.step .go{display:none}h1{font-size:30px}}
+.modal{position:fixed;inset:0;background:rgba(23,32,51,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:40}
+.modal .card{max-width:680px;width:100%;max-height:86vh;overflow:auto}
+.streak{display:flex;gap:8px;flex-wrap:wrap}.streak i{width:32px;height:32px;border-radius:10px;background:#FBE3B0}.streak i.on{background:#F2A93B}
+.countdown{background:var(--dark);color:#fff;border-radius:22px;padding:14px 20px;display:flex;flex-direction:column;align-items:center;min-width:112px;text-align:center}
+.countdown small{font-size:13px;color:#C9D2E8;font-weight:600}.countdown b{font-size:32px;font-weight:800;letter-spacing:-.02em}
+.hist{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border:none;border-bottom:1px solid #EEF1F7;font-size:16px;background:none;width:100%;color:var(--ink);text-align:left;min-height:52px}
+.hist:last-child{border-bottom:none}
+.lbl{font-size:16px;font-weight:800;display:block;margin-bottom:8px}
+.pdfthumb{width:150px;height:196px;background:#fff;border-radius:10px;padding:13px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;transform:rotate(-3deg)}
+.pdfthumb b{font-size:8px;font-weight:800;color:var(--pri)}.pdfthumb b.k{color:var(--ink);margin-top:5px}
+.pdfthumb i{display:block;height:5px;background:#DCE3F2;border-radius:3px}
+.export{background:var(--dark);color:#fff;border-radius:28px;padding:26px;display:flex;gap:24px;align-items:center}
+.export p{color:#C9D2E8;font-size:16px}
+@media(max-width:560px){.pdfthumb{display:none}.export{padding:22px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.part{background:#fff;border-radius:18px;padding:14px 18px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav id="nav" aria-label="Navigation principale"></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="restoreInput" accept=".json,application/json" class="sr" tabindex="-1" aria-hidden="true">
+<script>
+"use strict";
+/* ================= FICHES ================= */
+const CATS = ["Entretien OFII", "Vie quotidienne", "Grammaire", "Techniques"];
+const FICHES = [
+{n:1,c:0,t:"Se présenter",d:"C'est souvent la première question de l'entretien.",
+e:["Le nom : <b>Je m'appelle</b> + prénom.","L'âge avec <b>avoir</b> : j'<b>ai</b> 29 ans (jamais « je suis 29 ans »).","La nationalité avec <b>être</b>, au féminin : je <b>suis</b> marocain<b>e</b>, algérienn<b>e</b>, tunisienn<b>e</b>…","Où on habite : j'habite <b>à</b> + ville, <b>depuis</b> + durée."],
+x:["Bonjour, je m'appelle Amina.","J'ai 29 ans et je suis marocaine.","Je suis mariée et j'ai deux enfants.","J'habite à Lyon depuis six mois.","Je suis arrivée en France en mars."],
+r:"Je m'appelle …, j'ai … ans, je suis … et j'habite à … depuis …",
+q:[["Je ___ 29 ans.",["suis","ai","fais"],1],["Elle est ___ .",["algérien","algérienne","algériens"],1],["J'habite ___ Marseille.",["en","à","au"],1]]},
+{n:2,c:0,t:"Parler de sa famille",d:"Situation familiale, enfants, parents.",
+e:["La situation : je suis <b>mariée</b>, <b>célibataire</b>, <b>divorcée</b>, <b>veuve</b>.","Les enfants : j'<b>ai</b> deux enfants / je n'ai <b>pas d'</b>enfant.","Les possessifs : <b>mon</b> mari, <b>ma</b> fille, <b>mes</b> parents.","L'âge des enfants : mon fils <b>a</b> 5 ans."],
+x:["Je suis mariée depuis quatre ans.","Mon mari s'appelle Karim, il est cuisinier.","J'ai une fille et un fils.","Ma fille a sept ans, elle va à l'école.","Mes parents habitent en Algérie."],
+r:"Je suis mariée, j'ai … enfants. Mon mari travaille …",
+q:[["___ mari est électricien.",["Ma","Mon","Mes"],1],["___ parents habitent au Maroc.",["Mon","Ma","Mes"],2],["Je n'ai pas ___ enfant.",["d'","un","des"],0]]},
+{n:3,c:0,t:"Pourquoi je suis en France",d:"Expliquer sa venue et ses projets.",
+e:["Expliquer : je suis venue en France <b>pour</b> + verbe à l'infinitif.","Raisons fréquentes : rejoindre mon mari, travailler, étudier, vivre avec ma famille.","Le passé : je <b>suis arrivée</b> en (mois / année).","Les projets : je <b>voudrais</b> / je <b>vais</b> + infinitif."],
+x:["Je suis venue en France pour rejoindre mon mari.","Je suis arrivée en France en janvier 2026.","Je voudrais apprendre le français.","Je vais chercher un travail dans la vente.","Plus tard, je voudrais passer mon permis de conduire."],
+r:"Je suis venue en France pour …. Je voudrais …",
+q:[["Je suis venue pour ___ mon mari.",["rejoins","rejoindre","rejoint"],1],["Je suis ___ en France en mai.",["arrivé","arrivée","arriver"],1],["Je ___ apprendre le français.",["voudrais","voudrait","vouloir"],0]]},
+{n:4,c:0,t:"Métier et études",d:"Parler de son travail d'avant et de maintenant.",
+e:["Le métier, sans article : je suis <b>coiffeuse</b>, il est <b>infirmier</b>.","Le lieu : je travaille <b>dans</b> un restaurant / <b>chez</b> Carrefour.","Le passé : <b>j'étais</b> couturière ; j'<b>ai étudié</b> le droit.","Sans travail : je <b>cherche</b> un travail / je suis <b>au foyer</b>."],
+x:["Dans mon pays, j'étais couturière.","J'ai étudié la comptabilité pendant trois ans.","En ce moment, je ne travaille pas.","Je cherche un travail dans la restauration.","Mon mari travaille dans le bâtiment."],
+r:"Dans mon pays, j'étais …. Ici, je cherche un travail dans …",
+q:[["Je suis ___ coiffeuse.",["une","(rien)","la"],1],["Il travaille ___ un hôpital.",["dans","à","en"],0],["Je ___ un travail.",["cherche","cherches","chercher"],0]]},
+{n:5,c:0,t:"Ma journée et mes loisirs",d:"Raconter ses habitudes.",
+e:["Les verbes pronominaux : je <b>me lève</b>, je <b>me couche</b>.","L'heure : <b>à</b> 7 heures, <b>vers</b> midi, <b>le soir</b>.","Les goûts : j'<b>aime</b> + nom ou infinitif : j'aime la cuisine, j'aime marcher.","La fréquence : <b>souvent</b>, <b>le week-end</b>, <b>tous les jours</b>."],
+x:["Je me lève à sept heures.","J'emmène les enfants à l'école à huit heures et demie.","L'après-midi, je fais les courses.","Le week-end, on se promène au parc.","J'aime cuisiner et regarder des séries."],
+r:"Le matin, je …. L'après-midi, je …. Le week-end, j'aime …",
+q:[["Je ___ lève à 7 h.",["me","te","se"],0],["Le week-end, j'aime ___ au parc.",["marche","marcher","marché"],1],["Je fais les courses ___ samedi.",["le","à","en"],0]]},
+{n:6,c:0,t:"Décrire une image",d:"À l'entretien, on peut vous montrer une photo.",
+e:["Commencer : <b>Je vois</b>… / <b>Il y a</b>… / <b>Sur l'image</b>…","Situer : <b>à gauche</b>, <b>à droite</b>, <b>au milieu</b>, <b>devant</b>, <b>derrière</b>.","Ce qui se passe : la femme <b>est en train de</b> téléphoner.","Réagir : c'est dangereux, <b>il faut</b> + infinitif."],
+x:["Sur l'image, je vois une cuisine.","Il y a du feu sur la cuisinière.","À droite, il y a un extincteur.","Un homme est en train de téléphoner.","Il faut appeler les pompiers, le 18."],
+r:"Sur l'image, je vois …. Il y a …. Il faut …",
+q:[["___ un homme sur l'image.",["Il est","Il y a","C'est a"],1],["Le feu est ___ la cuisinière.",["sur","sous","dans"],0],["Il ___ appeler les pompiers.",["faut","faux","fait"],0]]},
+{n:7,c:0,t:"Les urgences",d:"Les numéros et quoi dire au téléphone.",
+e:["<b>15</b> SAMU (urgence médicale), <b>17</b> police, <b>18</b> pompiers, <b>112</b> numéro européen.","Au téléphone, dire : <b>qui</b> vous êtes, <b>où</b> vous êtes, <b>ce qui</b> se passe.","Donner l'adresse exacte : numéro, rue, ville, étage.","Ne pas raccrocher avant qu'on vous le dise."],
+x:["Allô, il y a un incendie dans ma cuisine !","J'habite 12 rue Victor Hugo, à Lyon, au troisième étage.","Mon fils est tombé, il respire mal.","Un homme est par terre, il ne bouge pas.","Il y a eu un accident de voiture devant chez moi."],
+r:"Allô, je m'appelle …. J'habite …. Il y a …, venez vite s'il vous plaît.",
+q:[["Pour un incendie, j'appelle le…",["15","17","18"],2],["Pour un malaise, j'appelle le…",["15","17","18"],0],["Pour un vol, j'appelle le…",["15","17","18"],1]]},
+{n:8,c:1,t:"Nombres, dates et heure",d:"Indispensable pour les rendez-vous.",
+e:["Les nombres difficiles : 70 <b>soixante-dix</b>, 80 <b>quatre-vingts</b>, 90 <b>quatre-vingt-dix</b>.","La date : <b>le</b> 3 mars, <b>le</b> lundi 12 octobre (sans « de »).","L'heure : 14 h 30 = <b>quatorze heures trente</b> = deux heures et demie.","Les prix : 3,50 € = <b>trois euros cinquante</b>."],
+x:["Le rendez-vous est le mardi 10 novembre.","Le bus part à huit heures et quart.","Ça coûte quatre-vingt-dix-neuf euros.","Je suis née le 5 juillet 1997.","Mon numéro, c'est le 06 12 34 56 78."],
+r:"Le rendez-vous est le … à … heures.",
+q:[["Soixante-quinze =",["65","75","85"],1],["14 h 45 =",["quatorze heures quarante-cinq","quatre heures quarante-cinq","quatorze heures quinze"],0],["« Le 3 mai » s'écrit :",["le 3 mai","le 3 de mai","3 mai le"],0]]},
+{n:9,c:1,t:"Adresse et formulaires",d:"Remplir une fiche sans se tromper.",
+e:["<b>Nom</b> = nom de famille ; <b>Prénom</b> = le petit nom.","Date de naissance : <b>JJ/MM/AAAA</b> (jour / mois / année).","L'adresse : numéro + rue + code postal + ville : 12 rue de la Paix, 69003 Lyon.","Autres cases : situation familiale, nationalité, profession, signature."],
+x:["Nom : BENALI. Prénom : Amina.","Date de naissance : 05/07/1997.","Adresse : 8 avenue Jean Jaurès, 69007 Lyon.","Téléphone : 06 12 34 56 78.","Situation familiale : mariée."],
+r:"J'habite au (numéro) rue …, (code postal) (ville).",
+q:[["Née le 5 juillet 1997 :",["07/05/1997","05/07/1997","1997/05/07"],1],["Dans « Amina BENALI », le prénom est :",["Amina","BENALI","les deux"],0],["69003, c'est :",["un numéro de téléphone","un code postal","une date"],1]]},
+{n:10,c:1,t:"Logement, courses, transports",d:"Les mots de tous les jours.",
+e:["Logement : un appartement, un studio, le <b>loyer</b>, la facture, le propriétaire.","Courses : je voudrais <b>un kilo de</b>, <b>une bouteille de</b>, <b>un paquet de</b>…","Le prix : <b>Combien ça coûte ?</b> / C'est combien ?","Transports : prendre <b>le</b> bus, <b>le</b> tram, <b>le</b> métro ; un ticket, un arrêt, une ligne."],
+x:["J'habite dans un appartement de trois pièces.","Le loyer est de 650 euros par mois.","Je voudrais un kilo de tomates, s'il vous plaît.","C'est combien, le pain ?","Je prends le tram ligne 2 jusqu'à la gare."],
+r:"Bonjour, je voudrais … s'il vous plaît. C'est combien ?",
+q:[["Je voudrais un kilo ___ pommes.",["de","des","du"],0],["Je ___ le bus tous les jours.",["prends","prend","prendre"],0],["L'argent du logement chaque mois, c'est le…",["loyer","salaire","ticket"],0]]},
+{n:11,c:1,t:"La santé",d:"Chez le médecin et à la pharmacie.",
+e:["Avoir mal : j'ai mal <b>à la</b> tête, <b>au</b> ventre, <b>aux</b> dents.","Prendre rendez-vous chez le médecin (par téléphone ou sur internet).","La <b>carte Vitale</b>, l'<b>ordonnance</b>, la pharmacie, le médicament.","Depuis quand : j'ai de la fièvre <b>depuis</b> deux jours."],
+x:["Bonjour, je voudrais prendre rendez-vous avec le docteur.","J'ai mal à la gorge depuis trois jours.","Mon fils a de la fièvre.","Voici ma carte Vitale.","Il faut prendre ce médicament deux fois par jour."],
+r:"J'ai mal à … depuis …. Je voudrais un rendez-vous.",
+q:[["J'ai mal ___ ventre.",["à la","au","aux"],1],["J'ai mal ___ dents.",["au","à la","aux"],2],["Le papier du médecin pour la pharmacie :",["l'ordonnance","la carte Vitale","la facture"],0]]},
+{n:12,c:1,t:"Les démarches",d:"Qui fait quoi ?",
+e:["<b>La mairie</b> : état civil, inscription à l'école.","<b>La CAF</b> : aides pour la famille et le logement.","<b>France Travail</b> : chercher un emploi ; <b>la CPAM</b> : l'assurance maladie.","<b>La préfecture</b> : le titre de séjour ; <b>l'OFII</b> : le contrat d'intégration (CIR)."],
+x:["Je vais à la mairie pour inscrire ma fille à l'école.","J'ai fait une demande d'aide au logement à la CAF.","Je suis inscrite à France Travail.","J'ai un rendez-vous à la préfecture pour mon titre de séjour.","J'ai signé le contrat d'intégration républicaine."],
+r:"Pour …, je vais à ….",
+q:[["Pour le titre de séjour, je vais à…",["la CAF","la préfecture","la mairie"],1],["Pour chercher un emploi :",["France Travail","la CPAM","la mairie"],0],["Les aides au logement :",["l'OFII","la CAF","la poste"],1]]},
+{n:13,c:2,t:"Être, avoir, aller, faire",d:"Les 4 verbes les plus utiles.",
+e:["<b>Être</b> : je suis, tu es, il/elle est, nous sommes, vous êtes, ils sont.","<b>Avoir</b> : j'ai, tu as, il a, nous avons, vous avez, ils ont.","<b>Aller</b> : je vais, tu vas, il va, nous allons, vous allez, ils vont.","<b>Faire</b> : je fais, tu fais, il fait, nous faisons, vous faites, ils font."],
+x:["Nous sommes à Lyon depuis un an.","Ils ont deux enfants.","Je vais au marché le samedi.","Qu'est-ce que vous faites le week-end ?","Elle fait la cuisine."],
+r:"Je suis…, j'ai…, je vais…, je fais…",
+q:[["Nous ___ marocains.",["sommes","avons","êtes"],0],["Vous ___ du sport ?",["faisez","faites","fait"],1],["Ils ___ à la mairie.",["vont","vas","allons"],0]]},
+{n:14,c:2,t:"Les verbes en -er",d:"Parler, habiter, travailler…",
+e:["Terminaisons : je parl<b>e</b>, tu parl<b>es</b>, il parl<b>e</b>.","nous parl<b>ons</b>, vous parl<b>ez</b>, ils parl<b>ent</b> (on n'entend pas -ent).","Avec une voyelle : j'<b>aime</b>, j'<b>habite</b>, j'<b>écoute</b>.","Verbes utiles : parler, habiter, travailler, chercher, aimer, manger."],
+x:["Je parle arabe et un peu français.","Nous habitons à Villeurbanne.","Mes enfants mangent à la cantine.","Vous travaillez où ?","Tu cherches un appartement ?"],
+r:"J'habite…, je parle…, je travaille…",
+q:[["Nous ___ à Paris.",["habitez","habitons","habitent"],1],["Ils ___ français.",["parlent","parlons","parle"],0],["J'___ la musique.",["aime","aimes","aimez"],0]]},
+{n:15,c:2,t:"La négation",d:"Dire non correctement.",
+e:["<b>ne</b> + verbe + <b>pas</b> : je <b>ne</b> travaille <b>pas</b>.","Devant une voyelle : je <b>n'</b>aime pas, je <b>n'</b>ai pas.","Après la négation, un / une / des → <b>de</b> : je n'ai pas <b>de</b> voiture.","Autres : ne… <b>jamais</b>, ne… <b>plus</b>, ne… <b>rien</b>."],
+x:["Je ne parle pas anglais.","Je n'ai pas de voiture.","Il ne travaille plus.","Je ne mange jamais de porc.","Je ne comprends pas."],
+r:"Je ne comprends pas, pouvez-vous répéter ?",
+q:[["Je n'ai pas ___ enfants.",["des","de","d'"],2],["Je ___ travaille pas.",["ne","n'","pas"],0],["Il ne fume ___ .",["jamais","rien","pas de"],0]]},
+{n:16,c:2,t:"Poser une question",d:"Pour demander une information.",
+e:["Avec la voix : vous habitez ici <b>?</b> (la voix monte).","Avec <b>est-ce que</b> : est-ce que vous avez un rendez-vous ?","Les mots : <b>où</b>, <b>quand</b>, <b>comment</b>, <b>combien</b>, <b>pourquoi</b>, <b>qui</b>, <b>quel(le)</b>.","Poli : <b>Excusez-moi</b>, <b>pourriez-vous</b>… ?"],
+x:["Où est la mairie, s'il vous plaît ?","Est-ce que le bus 12 passe ici ?","Combien coûte le ticket ?","À quelle heure ferme la pharmacie ?","Excusez-moi, pourriez-vous m'aider ?"],
+r:"Excusez-moi, est-ce que vous pouvez m'aider ?",
+q:[["___ habitez-vous ? — À Lyon.",["Quand","Où","Combien"],1],["___ ça coûte ? — 5 euros.",["Combien","Comment","Pourquoi"],0],["___ heure est-il ?",["Quel","Quelle","Quels"],1]]},
+{n:17,c:2,t:"Le passé composé",d:"Raconter ce qu'on a fait.",
+e:["<b>avoir</b> + participe : j'<b>ai mangé</b>, j'<b>ai fini</b>, j'<b>ai pris</b>.","<b>être</b> avec les verbes de mouvement : je <b>suis allée</b>, je <b>suis arrivée</b>, je <b>suis née</b>.","Avec être, on accorde : elle est arrivé<b>e</b>, ils sont venu<b>s</b>.","Participes à retenir : fait, pris, eu, été, vu, venu, mis."],
+x:["Hier, j'ai fait les courses.","Je suis arrivée en France en 2025.","Nous avons visité Paris.","Elle est allée chez le médecin.","J'ai eu mon rendez-vous à l'OFII."],
+r:"Hier, je suis allée … et j'ai …",
+q:[["Hier, j'___ mangé au restaurant.",["ai","suis","as"],0],["Elle est ___ en France en mai.",["arrivé","arrivée","arriver"],1],["Nous ___ allés au marché.",["avons","sommes","êtes"],1]]},
+{n:18,c:2,t:"Le futur proche",d:"Parler de ses projets.",
+e:["<b>aller</b> au présent + infinitif : je <b>vais travailler</b>.","Pour demain ou un projet : demain, je <b>vais aller</b> à la CAF.","La négation : je <b>ne vais pas</b> venir.","Les mots du futur : demain, la semaine prochaine, bientôt, dans un mois."],
+x:["Demain, je vais aller à la préfecture.","Je vais commencer une formation.","Nous allons déménager le mois prochain.","Mon mari va chercher les enfants.","Je ne vais pas travailler samedi."],
+r:"Demain, je vais …. Plus tard, je vais …",
+q:[["Demain, je ___ aller à la mairie.",["vais","va","vas"],0],["Nous allons ___ .",["déménager","déménagé","déménageons"],0],["Ils ___ partir en vacances.",["vont","allez","va"],0]]},
+{n:19,c:2,t:"Les articles",d:"Un, le, du… lequel choisir ?",
+e:["On ne connaît pas : <b>un</b> livre, <b>une</b> pomme, <b>des</b> enfants.","On connaît : <b>le</b> bus, <b>la</b> mairie, <b>l'</b>école, <b>les</b> enfants.","Une quantité qu'on ne compte pas : <b>du</b> pain, <b>de la</b> viande, <b>de l'</b>eau.","Après aimer / détester : j'aime <b>le</b> café."],
+x:["Je voudrais du pain et de l'eau.","J'ai un fils et une fille.","La mairie est fermée le dimanche.","J'aime le thé à la menthe.","Il y a des enfants dans le parc."],
+r:"Je voudrais du …, de la …, de l'…",
+q:[["Je bois ___ eau.",["du","de la","de l'"],2],["J'aime ___ café.",["le","du","un"],0],["Je mange ___ viande.",["de la","du","le"],0]]},
+{n:20,c:2,t:"Les prépositions de lieu",d:"À, en, au, chez, dans.",
+e:["Une ville : <b>à</b> Paris, <b>à</b> Lyon.","Un pays : <b>en</b> France, <b>en</b> Algérie ; <b>au</b> Maroc, <b>au</b> Sénégal ; <b>aux</b> États-Unis.","Une personne : <b>chez</b> le médecin, <b>chez</b> moi.","Un lieu : <b>dans</b> la cuisine, <b>à la</b> pharmacie, <b>au</b> marché."],
+x:["J'habite à Grenoble, en France.","Ma famille habite au Maroc.","Je vais chez le médecin.","Les enfants sont à l'école.","Il est dans sa chambre."],
+r:"Je viens du / de …, j'habite à … en France.",
+q:[["Ma famille est ___ Tunisie.",["au","en","à"],1],["Je vais ___ dentiste.",["chez le","au chez","à le"],0],["Il habite ___ Sénégal.",["en","au","à"],1]]},
+{n:21,c:3,t:"Quand je ne comprends pas",d:"Les phrases qui sauvent pendant le test.",
+e:["Faire répéter : <b>Pouvez-vous répéter, s'il vous plaît ?</b>","Faire ralentir : <b>Plus lentement, s'il vous plaît.</b>","Demander un mot : <b>Que veut dire</b> « … » ? / <b>Comment on dit</b> … en français ?","Gagner du temps : <b>Euh… alors…</b> / <b>Je cherche le mot.</b>"],
+x:["Excusez-moi, je n'ai pas compris.","Pouvez-vous répéter, s'il vous plaît ?","Vous pouvez parler plus lentement ?","Que veut dire « justificatif » ?","Comment on dit « passport » en français ?"],
+r:"Pardon, je n'ai pas compris. Pouvez-vous répéter, s'il vous plaît ?",
+q:[["Pour faire répéter :",["Pouvez-vous répéter ?","Je répète.","Répétez-moi pas."],0],["Pour faire ralentir :",["Plus vite !","Plus lentement, s'il vous plaît.","Moins fort."],1],["Pour demander un mot :",["Que veut dire ce mot ?","Où est ce mot ?","Combien ce mot ?"],0]]},
+{n:22,c:3,t:"Écrire un petit message",d:"Invitation, excuse, rendez-vous.",
+e:["Commencer : <b>Bonjour</b> Madame / Monsieur, ou le prénom pour un ami.","Le but : je vous écris <b>pour</b>… / je ne peux pas venir <b>parce que</b>…","Proposer : <b>Est-ce que</b> vous êtes disponible… ? On se retrouve <b>à</b> 15 h ?","Finir : <b>Merci</b>, <b>Cordialement</b> (formel) / <b>Bisous</b>, <b>À bientôt</b> (ami)."],
+x:["Bonjour Madame, je ne peux pas venir au cours demain parce que mon fils est malade. Cordialement, Amina.","Salut Sara ! Tu veux venir manger chez moi samedi ? À bientôt !","Bonjour, je voudrais changer mon rendez-vous de lundi. Merci.","Bonjour Monsieur, je suis en retard de dix minutes. Excusez-moi.","Merci pour ton aide, à demain !"],
+r:"Bonjour …, je vous écris pour …. Merci, cordialement, …",
+q:[["Pour un message formel, on finit par :",["Bisous","Cordialement","Salut"],1],["Je ne viens pas ___ je suis malade.",["parce que","pour","mais que"],0],["Pour inviter un ami :",["Tu veux venir samedi ?","Je vous écris pour…","Veuillez agréer…"],0]]}
+];
+const FBY = {}; FICHES.forEach(f => FBY[f.n] = f);
+/* Programme des 7 premiers jours (3 à 4 fiches par jour) */
+const PROGRAM = [[1,13,8],[2,14,9],[3,15,21],[4,16,10],[5,17,11],[6,7,19],[12,18,20,22]];
+/* ================= BANQUE DE QUESTIONS ================= */
+/* s : CE = lire, CO = écouter, EE = écrire / grammaire, EO = parler
+   t : qcm | write | speak | image ; f : fiche liée */
+const BANK = [], BY = {};
+function add(it){ if(BY[it.id]) return; BANK.push(it); BY[it.id] = it; }
+
+/* ---------- Compréhension écrite (documents) ---------- */
+const DOCS = {
+ pharma:{k:"Affiche",b:"PHARMACIE DU CENTRE\nOuvert du lundi au samedi\n9 h – 12 h 30 / 14 h – 19 h 30\nFermé le dimanche\nPharmacie de garde : appelez le 3237"},
+ sms1:{k:"SMS",b:"De : Sophie\nCoucou ! Le cours de français de demain est annulé. On se voit jeudi à 10 h à la médiathèque. Bisous"},
+ ecole:{k:"Affiche",b:"ÉCOLE JEAN MOULIN\nRéunion parents-professeurs\nMardi 17 novembre à 18 h\nSalle 4 – rez-de-chaussée\nMerci de venir avec le carnet de correspondance."},
+ bus:{k:"Horaires",b:"LIGNE C3 – Arrêt Gare Part-Dieu\nDu lundi au vendredi : toutes les 10 minutes\nSamedi : toutes les 15 minutes\nDimanche et jours fériés : pas de service"},
+ caf:{k:"E-mail",b:"Objet : Votre rendez-vous\nMadame, votre rendez-vous à la CAF est fixé au lundi 23 novembre à 9 h 15. Merci d'apporter votre avis d'imposition et un RIB.\nCordialement, la CAF du Rhône."},
+ annonce:{k:"Petite annonce",b:"À LOUER – Appartement T2, 45 m²\n3e étage avec ascenseur, proche tram\nLoyer : 620 € + 50 € de charges\nLibre le 1er décembre – Tél. 06 45 78 12 30"},
+ piscine:{k:"Panneau",b:"PISCINE MUNICIPALE\nBonnet de bain obligatoire\nInterdit de courir\nEnfants de moins de 10 ans accompagnés d'un adulte"},
+ ordo:{k:"Ordonnance",b:"Docteur Martin – Médecin généraliste\nPour : Mme Benali\nParacétamol 1000 mg : 1 comprimé 3 fois par jour pendant 5 jours.\nÀ prendre au moment des repas."},
+ mairie:{k:"Info mairie",b:"Les inscriptions à la cantine pour janvier sont ouvertes jusqu'au 15 décembre.\nInscription en ligne ou à l'accueil de la mairie (lundi–vendredi, 8 h 30 – 17 h)."},
+ ticket:{k:"Ticket de caisse",b:"SUPERMARCHÉ PRIMEUR\nPain ............ 1,20 €\nLait (1 L) ........ 1,05 €\nPommes (1 kg) .... 2,40 €\nTOTAL ........... 4,65 €"},
+ sms2:{k:"SMS",b:"De : Karim\nJe rentre tard ce soir, réunion au travail. Tu peux aller chercher Yanis à l'école à 16 h 30 ? Merci !"},
+ atelier:{k:"Affiche",b:"ATELIER CUISINE GRATUIT\nCentre social Les Tilleuls\nTous les mercredis de 14 h à 16 h\nInscription à l'accueil – places limitées"},
+ cabinet:{k:"Plaque",b:"Cabinet médical – Dr Lefèvre\nConsultations sur rendez-vous uniquement\nLundi, mardi, jeudi : 8 h – 18 h\nMercredi : 8 h – 12 h\nVendredi : fermé"},
+ convoc:{k:"Courrier",b:"Convocation\nMadame, vous êtes convoquée le jeudi 10 décembre à 8 h 45 pour une formation civique.\nAdresse : 5 rue de la République.\nDurée : 6 heures.\nApportez cette convocation et une pièce d'identité."},
+ travaux:{k:"Avis",b:"ATTENTION\nTravaux rue Pasteur du 2 au 20 novembre.\nLe bus 8 ne s'arrête pas à l'arrêt « Pasteur ».\nArrêt provisoire : rue Molière."},
+ invit:{k:"Message",b:"Chère Amina,\nJe fête mon anniversaire samedi 28 à partir de 19 h chez moi, 4 place Bellecour. Réponds-moi avant jeudi !\nSara"},
+ menu:{k:"Menu de la cantine",b:"CANTINE – Semaine du 16 novembre\nLundi : poulet, riz, yaourt\nMardi : poisson, haricots verts, pomme\nJeudi : omelette, pâtes, fromage\nVendredi : couscous aux légumes, orange\nMercredi : pas de cantine"},
+ ftravail:{k:"E-mail",b:"Objet : Atelier CV\nBonjour, France Travail vous propose un atelier pour écrire votre CV le vendredi 4 décembre de 9 h à 11 h. Inscription obligatoire avant le 1er décembre sur votre espace personnel."}
+};
+[
+ ["ce1","pharma",8,"Quand la pharmacie est-elle fermée ?",["Le samedi","Le dimanche","Le lundi matin"],1],
+ ["ce2","pharma",8,"À quelle heure ferme la pharmacie le soir ?",["12 h 30","19 h 30","14 h"],1],
+ ["ce3","sms1",22,"Quand est le prochain cours ?",["Demain","Jeudi à 10 h","Jeudi à 14 h"],1],
+ ["ce4","sms1",22,"Où est le cours ?",["À la mairie","À la médiathèque","Chez Sophie"],1],
+ ["ce5","ecole",12,"Qu'est-ce qu'il faut apporter ?",["Une photo","Le carnet de correspondance","Une pièce d'identité"],1],
+ ["ce6","ecole",12,"La réunion est pour qui ?",["Les parents","Les enfants seulement","Les médecins"],0],
+ ["ce7","bus",10,"Le dimanche, le bus C3…",["passe toutes les 10 minutes","passe toutes les 15 minutes","ne passe pas"],2],
+ ["ce8","bus",10,"Le samedi, le bus passe…",["toutes les 10 minutes","toutes les 15 minutes","une fois par heure"],1],
+ ["ce9","caf",12,"Avec quel organisme est le rendez-vous ?",["La CAF","La préfecture","France Travail"],0],
+ ["ce10","caf",12,"Qu'est-ce qu'il faut apporter ?",["Un passeport et une photo","L'avis d'imposition et un RIB","La carte Vitale"],1],
+ ["ce11","annonce",10,"Combien coûte l'appartement par mois, avec les charges ?",["620 €","670 €","570 €"],1],
+ ["ce12","annonce",10,"L'appartement est libre…",["tout de suite","le 1er décembre","le 3 décembre"],1],
+ ["ce13","piscine",10,"Un enfant de 8 ans peut venir…",["seul","avec un adulte","seulement le dimanche"],1],
+ ["ce14","ordo",11,"Combien de comprimés par jour ?",["1","3","5"],1],
+ ["ce15","ordo",11,"Pendant combien de temps ?",["3 jours","5 jours","1 semaine"],1],
+ ["ce16","mairie",12,"Jusqu'à quand peut-on s'inscrire ?",["Le 15 janvier","Le 15 décembre","Le 1er décembre"],1],
+ ["ce17","mairie",12,"Comment s'inscrire ?",["Seulement par téléphone","En ligne ou à l'accueil de la mairie","À l'école"],1],
+ ["ce18","ticket",8,"Combien coûtent les pommes ?",["1,20 €","2,40 €","4,65 €"],1],
+ ["ce19","sms2",22,"Que demande Karim ?",["De faire les courses","D'aller chercher Yanis à l'école","D'aller à la réunion"],1],
+ ["ce20","sms2",22,"Pourquoi Karim rentre-t-il tard ?",["Il est malade","Il a une réunion","Il est en vacances"],1],
+ ["ce21","atelier",10,"Combien coûte l'atelier ?",["5 euros","Rien, c'est gratuit","10 euros"],1],
+ ["ce22","atelier",10,"Quand a lieu l'atelier ?",["Le mercredi après-midi","Le mercredi matin","Tous les jours"],0],
+ ["ce23","cabinet",11,"Le vendredi, le cabinet est…",["ouvert le matin","fermé","ouvert l'après-midi"],1],
+ ["ce24","cabinet",11,"Pour voir le médecin, il faut…",["venir sans rendez-vous","prendre rendez-vous","téléphoner au 15"],1],
+ ["ce25","convoc",12,"Combien de temps dure la formation ?",["45 minutes","6 heures","10 heures"],1],
+ ["ce26","convoc",12,"Qu'est-ce qu'il faut apporter ?",["La convocation et une pièce d'identité","Seulement un stylo","Une photo"],0],
+ ["ce27","travaux",10,"Pendant les travaux, où s'arrête le bus 8 ?",["Rue Pasteur","Rue Molière","Il ne passe plus"],1],
+ ["ce28","invit",22,"Amina doit répondre…",["avant jeudi","samedi","après la fête"],0],
+ ["ce29","invit",22,"La fête commence à…",["17 h","19 h","21 h"],1],
+ ["ce30","menu",10,"Quel jour les enfants mangent du poisson ?",["Lundi","Mardi","Vendredi"],1],
+ ["ce31","menu",10,"Le mercredi…",["il y a du couscous","il n'y a pas de cantine","il y a une omelette"],1],
+ ["ce32","ftravail",12,"L'atelier sert à…",["écrire son CV","apprendre à conduire","trouver un logement"],0],
+ ["ce33","ftravail",12,"Il faut s'inscrire avant le…",["4 décembre","1er décembre","9 décembre"],1]
+].forEach(([id,doc,f,q,o,a]) => add({id,s:"CE",t:"qcm",f,doc,q,o,a}));
+
+/* ---------- Compréhension orale (messages, dialogues) ---------- */
+const AUD = {
+ a1:"Bonjour Madame, ici le cabinet du docteur Martin. Votre rendez-vous est déplacé à mardi, quatorze heures trente. Merci de rappeler au cabinet.",
+ a2:"Mesdames et messieurs, le train à destination de Marseille partira avec vingt minutes de retard. Départ prévu à dix heures quarante, voie trois.",
+ a3:"— Bonjour, je voudrais un kilo de tomates, s'il vous plaît.\n— Voilà. Avec ceci ?\n— Deux citrons.\n— Ça fait trois euros cinquante.",
+ a4:"Bonjour, c'est Madame Dubois, la maîtresse de Yanis. Yanis a de la fièvre. Pouvez-vous venir le chercher à l'école, s'il vous plaît ?",
+ a5:"Attention, le magasin va fermer dans quinze minutes. Merci de vous diriger vers les caisses.",
+ a6:"— Excusez-moi, où est la mairie ?\n— Prenez la première rue à droite, puis continuez tout droit. C'est à côté de la poste.",
+ a7:"Bonjour, vous êtes bien sur la messagerie de la CAF. Nos bureaux sont ouverts du lundi au vendredi, de huit heures trente à seize heures. Pour faire une demande, allez sur notre site internet.",
+ a8:"— Allô, les pompiers ? Il y a de la fumée dans l'immeuble, au deuxième étage !\n— Quelle est votre adresse ?\n— Quinze rue Victor Hugo, à Lyon.",
+ a9:"Salut Amina, c'est Sara ! On va au parc demain après-midi avec les enfants. Tu veux venir ? Rendez-vous à quinze heures devant la fontaine.",
+ a10:"La météo pour demain : le matin, du soleil sur toute la région. L'après-midi, de la pluie et du vent. Les températures seront entre huit et quatorze degrés.",
+ a11:"— Bonjour, je voudrais un ticket de bus.\n— Un ticket, c'est deux euros. Le carnet de dix tickets, c'est seize euros.",
+ a12:"— Vous avez rendez-vous ?\n— Oui, avec le docteur Leroy, à dix heures.\n— Très bien, asseyez-vous dans la salle d'attente.",
+ a13:"Bonjour, je suis votre nouveau voisin, Paul. J'habite au troisième étage. Je fais une petite fête samedi soir, il y aura un peu de bruit. Excusez-moi d'avance !",
+ a14:"— Qu'est-ce que vous faites dans la vie ?\n— Je suis aide-soignante dans une maison de retraite. Je travaille la nuit.",
+ a15:"Votre attention, s'il vous plaît : le métro ligne A est interrompu entre Perrache et Bellecour. Prenez le bus de remplacement.",
+ a16:"— J'ai mal à la gorge et j'ai de la fièvre depuis hier.\n— Ouvrez la bouche… Je vous donne un médicament. Revenez si ça ne va pas mieux dans trois jours.",
+ a17:"Bonjour, ici France Travail. Vous avez un entretien pour un poste de vendeuse jeudi à neuf heures. N'oubliez pas votre CV.",
+ a18:"Je m'appelle Fatou, j'ai trente-deux ans. Je suis sénégalaise. J'habite à Toulouse depuis deux ans avec mon mari et nos trois enfants.",
+ a19:"Je suis venu en France pour travailler. Avant, j'étais mécanicien en Tunisie. Maintenant, je cherche un travail dans un garage.",
+ a20:"Le marché a lieu tous les dimanches matin, de sept heures à treize heures, sur la place de l'église.",
+ a21:"— Bonjour, je voudrais inscrire mon fils à l'école.\n— Il a quel âge ?\n— Il a trois ans.\n— D'accord. Apportez le livret de famille et un justificatif de domicile.",
+ a22:"Mesdames et messieurs, la bibliothèque fermera exceptionnellement à midi ce samedi. Elle sera ouverte normalement lundi.",
+ a23:"— Allô, bonjour, je vous appelle pour l'annonce de l'appartement. Il est toujours libre ?\n— Oui. Vous pouvez le visiter demain à dix-huit heures."
+};
+[
+ ["co1","a1",8,"Le rendez-vous est…",["mardi à 14 h 30","lundi à 14 h 30","mardi à 16 h 30"],0],
+ ["co2","a2",8,"Le train part de quelle voie ?",["Voie 2","Voie 3","Voie 10"],1],
+ ["co3","a2",8,"Le retard est de…",["10 minutes","20 minutes","40 minutes"],1],
+ ["co4","a3",10,"Combien paie la cliente ?",["2,50 €","3,50 €","3,15 €"],1],
+ ["co5","a3",10,"Qu'achète la cliente ?",["Des tomates et des citrons","Des pommes et du pain","Des tomates et des oranges"],0],
+ ["co6","a4",11,"Qui appelle ?",["Le médecin","La maîtresse","La voisine"],1],
+ ["co7","a4",11,"Pourquoi appelle-t-elle ?",["Yanis est malade","Yanis est en retard","Il y a une fête"],0],
+ ["co8","a5",8,"Le magasin ferme dans…",["5 minutes","15 minutes","50 minutes"],1],
+ ["co9","a6",16,"La mairie est à côté…",["de la gare","de la poste","de l'école"],1],
+ ["co10","a6",16,"Il faut prendre la première rue…",["à gauche","à droite","en face"],1],
+ ["co11","a7",12,"Les bureaux sont ouverts…",["le samedi","du lundi au vendredi","tous les jours"],1],
+ ["co12","a7",12,"Les bureaux ferment à…",["16 h","18 h","12 h"],0],
+ ["co13","a8",7,"Quel est le problème ?",["Un accident de voiture","De la fumée dans l'immeuble","Une personne malade"],1],
+ ["co14","a8",7,"À quel étage ?",["Au 2e","Au 5e","Au 15e"],0],
+ ["co15","a9",22,"Le rendez-vous est à…",["13 h","15 h","16 h"],1],
+ ["co16","a9",22,"Où est le rendez-vous ?",["Devant l'école","Devant la fontaine","Devant le cinéma"],1],
+ ["co17","a10",8,"Demain après-midi, il va…",["faire beau","pleuvoir","neiger"],1],
+ ["co18","a11",10,"Le carnet de 10 tickets coûte…",["2 €","16 €","20 €"],1],
+ ["co19","a12",11,"Où la personne doit-elle attendre ?",["Dans la salle d'attente","Dehors","À l'accueil"],0],
+ ["co20","a13",5,"Pourquoi Paul parle-t-il à sa voisine ?",["Il cherche son chat","Il la prévient pour une fête","Il demande de l'argent"],1],
+ ["co21","a14",4,"Quel est son métier ?",["Infirmière","Aide-soignante","Cuisinière"],1],
+ ["co22","a14",4,"Quand travaille-t-elle ?",["Le matin","La nuit","Le week-end"],1],
+ ["co23","a15",10,"Que faut-il faire ?",["Attendre le métro","Prendre le bus de remplacement","Rentrer à pied"],1],
+ ["co24","a16",11,"Depuis quand est-elle malade ?",["Depuis hier","Depuis 3 jours","Depuis une semaine"],0],
+ ["co25","a17",12,"Pour quel poste est l'entretien ?",["Vendeuse","Caissière","Secrétaire"],0],
+ ["co26","a17",12,"Qu'est-ce qu'il faut apporter ?",["Un CV","Une photo","Un diplôme"],0],
+ ["co27","a18",1,"Quel âge a Fatou ?",["22 ans","32 ans","42 ans"],1],
+ ["co28","a18",2,"Combien d'enfants a-t-elle ?",["2","3","4"],1],
+ ["co29","a19",3,"Que cherche-t-il ?",["Un logement","Un travail dans un garage","Une école"],1],
+ ["co30","a20",8,"Quand a lieu le marché ?",["Le samedi matin","Le dimanche matin","Le dimanche après-midi"],1],
+ ["co31","a21",12,"Quel âge a le fils ?",["2 ans","3 ans","6 ans"],1],
+ ["co32","a21",12,"Qu'est-ce qu'il faut apporter ?",["Le livret de famille et un justificatif de domicile","Une photo et un passeport","La carte Vitale"],0],
+ ["co33","a22",8,"Samedi, la bibliothèque ferme à…",["10 h","12 h","18 h"],1],
+ ["co34","a23",10,"La visite est…",["aujourd'hui à 18 h","demain à 18 h","demain à 8 h"],1]
+].forEach(([id,au,f,q,o,a]) => add({id,s:"CO",t:"qcm",f,au:AUD[au],q,o,a}));
+
+/* ---------- Nombres en lettres (pour les audios générés) ---------- */
+const U = ["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix","onze","douze","treize","quatorze","quinze","seize","dix-sept","dix-huit","dix-neuf"];
+const T = {2:"vingt",3:"trente",4:"quarante",5:"cinquante",6:"soixante"};
+function nfr(n){
+ if(n<20) return U[n];
+ if(n<70){ const t=Math.floor(n/10), u=n%10; return T[t]+(u===0?"":(u===1?" et un":"-"+U[u])); }
+ if(n<80) return n===71?"soixante et onze":"soixante-"+U[n-60];
+ if(n===80) return "quatre-vingts";
+ return "quatre-vingt-"+U[n-80];
+}
+const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+function rot(arr,k){ const r=arr.slice(); for(let i=0;i<k%r.length;i++) r.push(r.shift()); return r; }
+function placeOpts(good, bads, k){ const o=[good].concat(bads.slice(0,2)); const r=rot(o,k); return {o:r, a:r.indexOf(good)}; }
+function h2s(h,m){ return h+" h "+String(m).padStart(2,"0"); }
+function h2w(h,m){ return (h===1?"une heure":nfr(h)+" heures")+(m?" "+nfr(m):""); }
+
+/* Heures */
+[[9,30],[14,30],[16,45],[8,15],[10,50],[11,20],[13,40],[17,10],[18,30],[7,45],[12,15],[15,20],[19,40],[20,5],[9,10],[16,30],[14,15],[10,30],[18,50],[8,40],[11,45],[13,15]].forEach(([h,m],i)=>{
+ const tpl=[["Votre rendez-vous est à {w}.","À quelle heure est le rendez-vous ?"],["Le bus part à {w}.","À quelle heure part le bus ?"],["Le cours commence à {w}.","À quelle heure commence le cours ?"],["La pharmacie ouvre à {w}.","À quelle heure ouvre la pharmacie ?"],["Le train arrive à {w}.","À quelle heure arrive le train ?"]][i%5];
+ const bads=[h2s(h>=12?h-10:h+10,m), h2s(h,(m+15)%60===m?(m+5)%60:(m+15)%60)];
+ const p=placeOpts(h2s(h,m),bads,i);
+ add({id:"gh"+i,s:"CO",t:"qcm",f:8,au:tpl[0].replace("{w}",h2w(h,m)),q:tpl[1],o:p.o,a:p.a});
+});
+/* Prix */
+function e2s(e,c){ return e+(c?","+String(c).padStart(2,"0"):"")+" €"; }
+function e2w(e,c){ return (e===1?"un euro":nfr(e)+" euros")+(c?" "+nfr(c):""); }
+[[3,50],[12,90],[7,20],[25,0],[1,80],[64,50],[99,0],[15,75],[4,60],[78,0],[2,30],[36,90],[71,0],[9,95],[85,40],[47,0],[5,15],[92,0],[18,60],[6,70]].forEach(([e,c],i)=>{
+ const cands=[e>=70?e-10:e+10, e>=80?e-20:e+20, e+1].filter(x=>x>0&&x!==e);
+ const p=placeOpts(e2s(e,c),[e2s(cands[0],c),e2s(cands[1],c)],i+1);
+ const tpl=[["Ça fait {w}, s'il vous plaît.","Combien faut-il payer ?"],["Ce pull coûte {w}.","Combien coûte le pull ?"],["Le total est de {w}.","Quel est le total ?"],["Le ticket coûte {w}.","Combien coûte le ticket ?"]][i%4];
+ add({id:"gp"+i,s:"CO",t:"qcm",f:8,au:tpl[0].replace("{w}",e2w(e,c)),q:tpl[1],o:p.o,a:p.a});
+});
+/* Dates */
+const JOURS=["lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+[[1,0,2],[12,1,10],[23,2,5],[7,3,8],[15,4,0],[30,5,6],[4,0,11],[18,1,3],[26,2,9],[9,3,1],[21,4,4],[13,5,7],[2,1,10],[28,3,5],[16,0,8],[11,4,11]].forEach(([n,j,mo],i)=>{
+ const s=(d,jj,mm)=>JOURS[jj]+" "+(d===1?"1er":d)+" "+MOIS[mm];
+ const w=JOURS[j]+" "+(n===1?"premier":nfr(n))+" "+MOIS[mo];
+ const n2 = n<=10? n+10 : n-10;
+ const p=placeOpts(s(n,j,mo),[s(n2,j,mo), s(n,j,(mo+1)%12)],i);
+ add({id:"gd"+i,s:"CO",t:"qcm",f:8,au:"Votre rendez-vous est le "+w+".",q:"Quelle est la date du rendez-vous ?",o:p.o,a:p.a});
+});
+/* Téléphones */
+function pw(p){ return p<10?"zéro "+U[p]:nfr(p); }
+function ps(arr){ return arr.map(p=>String(p).padStart(2,"0")).join(" "); }
+[[6,12,34,56,78],[7,81,95,23,70],[6,47,72,18,99],[6,90,15,64,83],[7,26,77,41,58],[6,33,88,71,92],[6,74,19,85,60],[7,52,96,38,14],[6,61,27,93,75],[6,85,44,17,96],[7,68,91,25,79],[6,97,36,82,13]].forEach((arr,i)=>{
+ const k=1+(i%4), b1=arr.slice(), b2=arr.slice();
+ b1[k]= arr[k]>=70? arr[k]-10 : (arr[k]+10)%100;
+ const k2=1+((i+2)%4); b2[k2]= arr[k2]>=80? arr[k2]-20 : (arr[k2]+20)%100;
+ const p=placeOpts(ps(arr),[ps(b1),ps(b2)],i);
+ add({id:"gt"+i,s:"CO",t:"qcm",f:8,au:"Mon numéro, c'est le "+arr.map(pw).join(", ")+".",q:"Quel est le numéro ?",o:p.o,a:p.a});
+});
+/* Nombres */
+[61,67,70,71,74,76,78,80,81,84,88,90,91,93,96,99,17,16,15,60,72,98].forEach((n,i)=>{
+ const tpl=["Mon fils a {w} ans.","J'habite au numéro {w}.","Il y a {w} élèves dans l'école.","Ma grand-mère a {w} ans.","Prenez le bus numéro {w}."][i%5];
+ const c=[n>=70?n-10:n+10, n>=80?n-20:(n+20<100?n+20:n-20)].filter(x=>x>0&&x<100&&x!==n);
+ const p=placeOpts(String(n),c.map(String),i);
+ add({id:"gn"+i,s:"CO",t:"qcm",f:8,au:tpl.replace("{w}",nfr(n)),q:"Quel nombre entendez-vous ?",o:p.o,a:p.a});
+});
+
+/* ---------- Grammaire & vocabulaire ---------- */
+FICHES.forEach(fi => fi.q.forEach((q,i) => add({id:"f"+fi.n+"q"+i,s:"EE",t:"qcm",f:fi.n,q:q[0],o:q[1],a:q[2]})));
+const CONJ = {
+ etre:[13,["suis","es","est","sommes","êtes","sont"],[[0,"Je ___ fatiguée aujourd'hui."],[3,"Nous ___ à la mairie."],[5,"Mes enfants ___ à l'école."],[2,"Elle ___ infirmière."],[4,"Vous ___ marocaine ?"]]],
+ avoir:[13,["ai","as","a","avons","avez","ont"],[[0,"J'___ deux enfants."],[3,"Nous ___ un rendez-vous."],[5,"Ils ___ une voiture."],[1,"Tu ___ quel âge ?"],[4,"Vous ___ votre carte Vitale ?"]]],
+ aller:[13,["vais","vas","va","allons","allez","vont"],[[0,"Je ___ au marché."],[3,"Nous ___ à la CAF demain."],[5,"Les enfants ___ au parc."],[2,"Il ___ chez le médecin."]]],
+ faire:[13,["fais","fais","fait","faisons","faites","font"],[[0,"Je ___ les courses le samedi."],[4,"Qu'est-ce que vous ___ dans la vie ?"],[5,"Ils ___ du sport."],[3,"Nous ___ la cuisine ensemble."]]],
+ habiter:[14,["habite","habites","habite","habitons","habitez","habitent"],[[0,"J'___ à Lyon."],[3,"Nous ___ près de la gare."],[5,"Mes parents ___ en Algérie."],[4,"Vous ___ où ?"]]],
+ parler:[14,["parle","parles","parle","parlons","parlez","parlent"],[[0,"Je ___ arabe et français."],[5,"Ils ___ très vite."],[3,"Nous ___ avec la maîtresse."],[1,"Tu ___ anglais ?"]]],
+ travailler:[14,["travaille","travailles","travaille","travaillons","travaillez","travaillent"],[[2,"Mon mari ___ dans un restaurant."],[0,"Je ne ___ pas le dimanche."],[4,"Vous ___ le samedi ?"],[5,"Elles ___ à l'hôpital."]]],
+ prendre:[10,["prends","prends","prend","prenons","prenez","prennent"],[[0,"Je ___ le bus tous les jours."],[3,"Nous ___ le tram."],[5,"Ils ___ le métro."],[2,"Elle ___ un café."]]],
+ pouvoir:[21,["peux","peux","peut","pouvons","pouvez","peuvent"],[[4,"___-vous répéter, s'il vous plaît ?"],[0,"Je ne ___ pas venir demain."],[2,"Il ___ venir à 15 h."]]],
+ vouloir:[3,["veux","veux","veut","voulons","voulez","veulent"],[[0,"Je ___ apprendre le français."],[4,"Vous ___ un café ?"],[5,"Ils ___ rester en France."]]]
+};
+Object.keys(CONJ).forEach(v=>{
+ const [f,forms,sents]=CONJ[v];
+ sents.forEach(([p,s],i)=>{
+  const cap = s.startsWith("___");
+  const good=forms[p];
+  const others=[...new Set(forms.filter(x=>x!==good))];
+  const bads=[others[(i+p)%others.length], others[(i+p+2)%others.length]];
+  const fix=x=>cap?x[0].toUpperCase()+x.slice(1):x;
+  const pl=placeOpts(fix(good),bads.map(fix),i+p);
+  add({id:"cj-"+v+i,s:"EE",t:"qcm",f,q:s+"  ("+v.replace("etre","être")+")",o:pl.o,a:pl.a});
+ });
+});
+[
+ ["g1",17,"Hier, nous ___ visité le musée.",["avons","sommes","ont"],0],
+ ["g2",17,"Elle ___ née en 1995.",["a","est","ai"],1],
+ ["g3",17,"Je suis ___ au marché ce matin.",["allée","aller","va"],0],
+ ["g4",17,"Ils ___ pris le train.",["ont","sont","avons"],0],
+ ["g5",17,"J'ai ___ mes devoirs.",["fait","faire","fais"],0],
+ ["g6",17,"Tu ___ venu hier ?",["es","as","est"],0],
+ ["g7",17,"Nous avons ___ un film.",["vu","voir","vois"],0],
+ ["g8",17,"Elle a ___ un rendez-vous.",["eu","avoir","a"],0],
+ ["g9",18,"Je vais ___ demain.",["partir","parti","pars"],0],
+ ["g10",18,"Elle ___ commencer une formation.",["va","vais","allez"],0],
+ ["g11",19,"Je voudrais ___ pain.",["du","de la","des"],0],
+ ["g12",19,"Il y a ___ enfants dans le parc.",["des","du","un"],0],
+ ["g13",20,"Mon frère habite ___ Canada.",["au","en","à"],0],
+ ["g14",20,"Je travaille ___ Paris.",["à","en","au"],0],
+ ["g15",20,"Nous allons ___ États-Unis.",["aux","au","en"],0],
+ ["g16",20,"Elle va ___ boulangerie.",["à la","au","en"],0],
+ ["g17",16,"___ tu t'appelles ? — Amina.",["Comment","Où","Quand"],0],
+ ["g18",16,"___ est-ce que tu viens ? — Demain.",["Quand","Qui","Combien"],0],
+ ["g19",16,"___ apprends-tu le français ? — Pour travailler.",["Pourquoi","Comment","Où"],0],
+ ["g20",15,"Je ne mange ___ viande.",["pas de","pas la","pas du"],0],
+ ["g21",15,"Il ___ comprend pas.",["ne","n'","non"],0],
+ ["g22",11,"J'ai mal ___ tête.",["à la","au","aux"],0],
+ ["g23",2,"___ fille a six ans.",["Ma","Mon","Mes"],0],
+ ["g24",5,"Je me couche ___ 22 heures.",["à","en","au"],0],
+ ["g25",10,"Je voudrais une bouteille ___ eau.",["d'","de la","des"],0],
+ ["g26",4,"Avant, j'___ vendeuse.",["étais","suis","serai"],0],
+ ["g27",22,"Je vous écris ___ changer mon rendez-vous.",["pour","parce que","avec"],0],
+ ["g28",9,"Le code postal est un…",["nombre de 5 chiffres","numéro de téléphone","nom de rue"],0],
+ ["g29",12,"Pour l'assurance maladie :",["la CPAM","la CAF","France Travail"],0],
+ ["g30",7,"Le numéro d'urgence européen est le…",["112","115","118"],0]
+].forEach(([id,f,q,o,a]) => add({id,s:"EE",t:"qcm",f,q,o,a}));
+
+/* ---------- Expression écrite (productions) ---------- */
+[
+ ["w1",22,"Vous ne pouvez pas aller au cours de français demain. Écrivez un message à votre formatrice (3 à 4 phrases).","Bonjour Madame, je ne peux pas venir au cours demain parce que ma fille est malade. Je dois rester à la maison avec elle. Je serai là jeudi. Merci et à bientôt, Amina."],
+ ["w2",1,"Présentez-vous par écrit : nom, âge, nationalité, ville (3 à 4 phrases).","Je m'appelle Amina, j'ai 29 ans. Je suis marocaine. J'habite à Lyon depuis six mois avec mon mari."],
+ ["w3",17,"Racontez votre journée d'hier (3 à 4 phrases).","Hier, je me suis levée à sept heures. J'ai emmené mon fils à l'école. L'après-midi, j'ai fait les courses au marché. Le soir, j'ai regardé un film avec mon mari."],
+ ["w4",22,"Invitez une amie à manger chez vous samedi. Donnez l'heure et l'adresse.","Salut Sara ! Tu veux venir manger chez moi samedi soir ? Rendez-vous à 19 h, 8 avenue Jean Jaurès. Réponds-moi vite ! Bisous."],
+ ["w5",10,"Vous cherchez un appartement. Écrivez une petite annonce (3 phrases).","Bonjour, je cherche un appartement de deux pièces à Lyon. Mon budget est de 650 euros par mois. Vous pouvez m'appeler au 06 12 34 56 78."],
+ ["w6",11,"Écrivez au médecin pour prendre rendez-vous. Dites ce que vous avez.","Bonjour Docteur, je voudrais un rendez-vous cette semaine. J'ai mal au ventre depuis trois jours et j'ai de la fièvre. Je suis disponible le matin. Merci, Amina Benali."],
+ ["w7",2,"Décrivez votre famille (3 à 4 phrases).","Je suis mariée depuis cinq ans. Mon mari s'appelle Karim, il est cuisinier. Nous avons deux enfants : une fille de six ans et un fils de trois ans."],
+ ["w8",4,"Quel travail voulez-vous faire en France ? Pourquoi ?","Je voudrais travailler dans la vente parce que j'aime parler avec les gens. Dans mon pays, j'étais vendeuse dans un magasin de vêtements. Je vais chercher une formation."],
+ ["w9",18,"Quels sont vos projets pour l'année prochaine ?","L'année prochaine, je vais continuer à apprendre le français. Je vais passer mon permis de conduire. Je vais aussi chercher un travail."],
+ ["w10",22,"Vous êtes en retard à un rendez-vous. Écrivez un SMS pour vous excuser.","Bonjour Madame, je suis désolée, je suis en retard de quinze minutes à cause du bus. J'arrive vite. Merci de votre compréhension."],
+ ["w11",9,"Remplissez une fiche : nom, prénom, date de naissance, adresse et situation familiale.","Nom : BENALI. Prénom : Amina. Date de naissance : 05/07/1997. Adresse : 8 avenue Jean Jaurès, 69007 Lyon. Situation familiale : mariée."],
+ ["w12",12,"Écrivez à la mairie pour demander comment inscrire votre enfant à l'école.","Bonjour, je voudrais inscrire mon fils à l'école maternelle. Il a trois ans. Quels documents faut-il apporter ? Merci, cordialement, Amina Benali."],
+ ["w13",5,"Qu'est-ce que vous aimez faire le week-end ? (3 à 4 phrases)","Le week-end, j'aime me promener au parc avec mes enfants. Le samedi, je fais le marché. Le dimanche, je cuisine pour toute la famille."],
+ ["w14",3,"Pourquoi êtes-vous en France ? Qu'est-ce que vous aimez ici ?","Je suis venue en France pour rejoindre mon mari. J'aime la ville de Lyon parce qu'elle est belle et calme. J'aime aussi les marchés."],
+ ["w15",10,"Décrivez votre logement (3 à 4 phrases).","J'habite dans un appartement au deuxième étage. Il y a deux chambres, un salon et une petite cuisine. Le loyer est de 600 euros. C'est près du tram."],
+ ["w16",22,"Remerciez une voisine qui vous a aidée.","Bonjour Madame Martin, merci beaucoup pour votre aide avec les enfants hier. Vous êtes très gentille. Je vous invite à prendre un thé chez moi. À bientôt !"],
+ ["w17",17,"Racontez votre arrivée en France.","Je suis arrivée en France en mars 2025. J'ai pris l'avion jusqu'à Lyon. Mon mari m'attendait à l'aéroport. Le premier jour, j'étais fatiguée mais contente."],
+ ["w18",11,"Votre enfant est malade. Écrivez un mot à l'école.","Madame, mon fils Yanis ne peut pas venir à l'école aujourd'hui parce qu'il a de la fièvre. Il va revenir lundi. Cordialement, Amina Benali."]
+].forEach(([id,f,q,m]) => add({id,s:"EE",t:"write",f,q,m}));
+
+/* ---------- Expression orale (entretien) ---------- */
+[
+ ["o1",1,"Présentez-vous.","Bonjour, je m'appelle Amina. J'ai 29 ans, je suis marocaine. Je suis mariée et j'habite à Lyon depuis six mois."],
+ ["o2",3,"Pourquoi êtes-vous venue en France ?","Je suis venue en France pour rejoindre mon mari. Il travaille ici depuis deux ans. Je voudrais apprendre le français et trouver un travail."],
+ ["o3",2,"Parlez-moi de votre famille.","Je suis mariée. Mon mari s'appelle Karim, il est cuisinier. Nous avons deux enfants : une fille de six ans et un fils de trois ans. Mes parents habitent au Maroc."],
+ ["o4",4,"Qu'est-ce que vous faisiez dans votre pays ?","Dans mon pays, j'étais couturière. J'ai travaillé pendant cinq ans dans un atelier de vêtements."],
+ ["o5",4,"Quel travail voulez-vous faire en France ?","Je voudrais travailler dans la couture ou dans la vente. D'abord, je vais apprendre le français, puis je vais chercher une formation."],
+ ["o6",5,"Comment se passe une journée normale pour vous ?","Je me lève à sept heures. J'emmène mes enfants à l'école. Ensuite, je fais le ménage et les courses. L'après-midi, je vais chercher les enfants et le soir, je prépare le dîner."],
+ ["o7",5,"Qu'est-ce que vous aimez faire le week-end ?","Le week-end, je me repose. Le samedi, je vais au marché. Le dimanche, nous allons au parc avec les enfants ou chez des amis."],
+ ["o8",5,"Quels sont vos loisirs ?","J'aime cuisiner, marcher et regarder des films. J'aime aussi lire un peu en français pour progresser."],
+ ["o9",10,"Décrivez votre logement.","J'habite dans un appartement au deuxième étage. Il y a deux chambres, un salon et une cuisine. C'est près du tram et de l'école."],
+ ["o10",10,"Comment vous déplacez-vous en ville ?","En ville, je prends le tram ou le bus. J'ai un abonnement. Parfois, je marche parce que l'école est près de chez moi."],
+ ["o11",17,"Quand êtes-vous arrivée en France ?","Je suis arrivée en France en mars 2025. Je suis venue en avion avec mes enfants."],
+ ["o12",18,"Quels sont vos projets en France ?","Je vais continuer à apprendre le français. Après, je vais chercher un travail et je voudrais passer mon permis de conduire."],
+ ["o13",14,"Quelles langues parlez-vous ?","Je parle arabe, c'est ma langue maternelle. Je parle aussi un peu français et un peu anglais."],
+ ["o14",12,"Avez-vous déjà fait des démarches à la mairie ou à la CAF ? Racontez.","Oui, je suis allée à la mairie pour inscrire mon fils à l'école. J'ai aussi fait une demande à la CAF pour l'aide au logement."],
+ ["o15",11,"Que faites-vous quand vous êtes malade ?","Quand je suis malade, je prends rendez-vous chez le médecin. Je donne ma carte Vitale. Après, je vais à la pharmacie avec l'ordonnance."],
+ ["o16",7,"Quels numéros appelez-vous en cas d'urgence ?","Pour un problème médical, j'appelle le 15. Pour la police, le 17. Pour un incendie, le 18. Et le 112, c'est le numéro européen."],
+ ["o17",20,"D'où venez-vous ? Parlez de votre ville d'origine.","Je viens de Fès, au Maroc. C'est une grande ville, très ancienne. Il y a une belle médina et beaucoup de marchés."],
+ ["o18",17,"Qu'est-ce que vous avez fait hier ?","Hier, je suis allée au cours de français. Ensuite, j'ai fait les courses et j'ai préparé le dîner. Le soir, j'ai regardé la télévision."],
+ ["o19",10,"Où faites-vous vos courses ? Qu'est-ce que vous achetez ?","Je fais mes courses au supermarché et au marché. J'achète des fruits, des légumes, du pain et de la viande."],
+ ["o20",2,"Avez-vous des enfants ? Parlez de leur école.","Oui, j'ai deux enfants. Ma fille va à l'école primaire, elle est en CP. Mon fils va à la crèche."],
+ ["o21",16,"Vous êtes perdue dans la rue. Demandez votre chemin à un passant.","Excusez-moi Monsieur, je cherche la gare. Est-ce que c'est loin ? Je dois aller à droite ou à gauche ?"],
+ ["o22",21,"Vous n'avez pas compris une question. Que dites-vous ?","Pardon, je n'ai pas bien compris. Pouvez-vous répéter plus lentement, s'il vous plaît ?"],
+ ["o23",11,"Téléphonez au médecin pour prendre rendez-vous.","Bonjour, je voudrais prendre rendez-vous avec le docteur Martin, s'il vous plaît. J'ai de la fièvre depuis deux jours. Est-ce que c'est possible demain matin ?"],
+ ["o24",10,"Au marché, achetez des fruits et demandez le prix.","Bonjour Monsieur, je voudrais un kilo de pommes et des bananes, s'il vous plaît. C'est combien ? Merci, au revoir !"],
+ ["o25",5,"Quel est votre plat préféré ? Pourquoi ?","Mon plat préféré, c'est le couscous. Je l'aime parce que c'est le plat de la famille, on le mange le vendredi."],
+ ["o26",3,"Qu'est-ce que vous aimez en France ? Qu'est-ce qui est difficile ?","J'aime la France parce que c'est calme et il y a beaucoup de parcs. C'est difficile de parler français et de trouver un travail."],
+ ["o27",3,"Pourquoi voulez-vous apprendre le français ?","Je veux apprendre le français pour parler avec les gens, aider mes enfants à l'école et trouver un travail."],
+ ["o28",18,"Qu'allez-vous faire après la formation ?","Après la formation, je vais chercher un travail. Je voudrais aussi continuer les cours pour avoir le niveau A2."],
+ ["o29",5,"Parlez de votre quartier.","J'habite dans un quartier calme. Il y a une boulangerie, une pharmacie et un parc. L'école est à côté."],
+ ["o30",7,"Il y a un incendie chez vous. Appelez les pompiers.","Allô, les pompiers ? Il y a le feu dans ma cuisine ! J'habite 12 rue Victor Hugo, à Lyon, au troisième étage. Venez vite, s'il vous plaît !"]
+].forEach(([id,f,q,m]) => add({id,s:"EO",t:"speak",f,q,m}));
+
+/* ---------- Décrire une image ---------- */
+[
+ ["i1","feu",7,"Décrivez l'image. Que se passe-t-il ? Que faut-il faire ?","Sur l'image, je vois une cuisine. Il y a du feu sur la cuisinière, dans une poêle. Il y a beaucoup de fumée. C'est dangereux. Il ne faut pas mettre d'eau sur le feu. Il faut couper le gaz, mettre un couvercle et appeler les pompiers, le 18.",true],
+ ["i2","malaise",7,"Décrivez l'image. Que faut-il faire ?","Je vois une rue. Un homme est par terre, il ne bouge pas. Une femme téléphone. Elle appelle le SAMU, le 15. Il faut rester avec la personne et donner l'adresse exacte.",true],
+ ["i3","accident",7,"Décrivez l'image. Que faut-il faire ?","Sur l'image, il y a un accident de voiture. Deux voitures sont abîmées et il y a de la fumée. Il faut mettre le triangle, appeler le 112, ou le 15 si une personne est blessée, et ne pas bouger les blessés.",true],
+ ["i4","marche",6,"Décrivez l'image : où sont les personnes ? Que font-elles ?","Je vois un marché. Il y a un vendeur et une cliente. Le vendeur vend des fruits : des oranges, des pommes et des citrons. Les pommes coûtent deux euros le kilo. La cliente a un panier, elle achète des fruits.",false],
+ ["i5","medecin",11,"Décrivez l'image : où sont les personnes ? Que font-elles ?","Je vois un cabinet médical. Le médecin est assis à son bureau. Une femme est malade, elle explique qu'elle a mal à la tête. Le médecin l'écoute et il va écrire une ordonnance.",false],
+ ["i6","parc",6,"Décrivez l'image : quel temps fait-il ? Que font les personnes ?","Il fait beau, il y a du soleil. Une famille est au parc, près d'une couverture rouge pour le pique-nique. Il y a un grand arbre. L'enfant joue au ballon. Ils sont contents.",false]
+].forEach(([id,sc,f,q,m,urg]) => add({id,s:"EO",t:"image",f,sc,q,m,urg}));
+/* ================= SCÈNES DESSINÉES ================= */
+function P(x,y,c,o){ o=o||{}; const skin=o.skin||"#C98B5E", hair=o.hair||"#2C2420";
+ return `<g><rect x="${x-26}" y="${y+24}" width="52" height="86" rx="22" fill="${c}"/>`+
+ `<rect x="${x-20}" y="${y+100}" width="17" height="68" rx="8" fill="${o.legs||'#2C3650'}"/><rect x="${x+3}" y="${y+100}" width="17" height="68" rx="8" fill="${o.legs||'#2C3650'}"/>`+
+ `<circle cx="${x}" cy="${y}" r="22" fill="${skin}"/><path d="M${x-23} ${y-2}a23 23 0 0 1 46 0c-8-9-38-9-46 0z" fill="${hair}"/>`+(o.extra||"")+`</g>`; }
+const SC = {
+feu:`<rect width="760" height="420" fill="#EAF0FA"/><rect y="300" width="760" height="120" fill="#D7DFEC"/>
+<rect x="470" y="50" width="200" height="150" rx="10" fill="#fff" stroke="#B9C5DA" stroke-width="6"/><path d="M570 50v150M470 125h200" stroke="#B9C5DA" stroke-width="6"/>
+<rect x="60" y="240" width="380" height="20" rx="4" fill="#7C8AA5"/><rect x="70" y="260" width="360" height="130" rx="8" fill="#9AA7C0"/><rect x="100" y="285" width="300" height="80" rx="8" fill="#2C3650"/>
+<ellipse cx="200" cy="232" rx="80" ry="14" fill="#3B4560"/><rect x="270" y="225" width="110" height="12" rx="6" fill="#3B4560"/>
+<path d="M140 225c-6-40 20-55 18-90 26 22 30 50 26 70 10-14 12-34 6-52 30 26 40 52 30 72 10-10 16-26 14-40 22 26 20 50 6 40z" fill="#F2913A"/>
+<path d="M165 225c-4-26 12-36 12-58 18 18 20 36 16 50 8-10 10-22 6-34 18 18 22 34 14 42z" fill="#FFD25A"/>
+<circle cx="190" cy="90" r="34" fill="#9AA3B5" opacity=".55"/><circle cx="240" cy="62" r="40" fill="#9AA3B5" opacity=".5"/><circle cx="150" cy="58" r="28" fill="#9AA3B5" opacity=".45"/><circle cx="300" cy="40" r="30" fill="#9AA3B5" opacity=".4"/>
+<rect x="580" y="262" width="66" height="104" rx="10" fill="#E0473A"/><rect x="598" y="244" width="30" height="22" rx="4" fill="#2C3650"/><rect x="590" y="292" width="46" height="32" rx="4" fill="#fff"/>`,
+malaise:`<rect width="760" height="420" fill="#E3EEF9"/><rect y="290" width="760" height="130" fill="#C9D3E2"/><rect y="282" width="760" height="10" fill="#AEB9CC"/>
+<rect x="40" y="90" width="150" height="192" fill="#F3E3C8"/><rect x="62" y="120" width="44" height="54" rx="4" fill="#9CC3E6"/><rect x="124" y="120" width="44" height="54" rx="4" fill="#9CC3E6"/><rect x="92" y="208" width="46" height="74" rx="4" fill="#8A5A3B"/>
+<rect x="610" y="150" width="22" height="132" fill="#7A5534"/><circle cx="621" cy="130" r="62" fill="#6FB27A"/>
+<g transform="rotate(-88 330 340)">${P(330,250,"#4C6FD6",{hair:"#4A3A30"})}</g>
+${P(470,140,"#D9568C",{extra:`<rect x="484" y="132" width="14" height="24" rx="3" fill="#172033"/><path d="M496 165l-20 20" stroke="#D9568C" stroke-width="14" stroke-linecap="round"/>`})}
+<path d="M520 110q14-12 28 0M526 96q22-18 44 0" stroke="#2B46C9" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+accident:`<rect width="760" height="420" fill="#E6EEF8"/><rect y="200" width="760" height="220" fill="#7D879A"/><path d="M0 310h760" stroke="#fff" stroke-width="8" stroke-dasharray="40 30"/>
+<rect x="0" y="190" width="760" height="12" fill="#AEB9CC"/>
+<g transform="rotate(-8 260 280)"><rect x="150" y="240" width="230" height="70" rx="18" fill="#E0473A"/><path d="M200 240l26-42h96l30 42z" fill="#E0473A"/><path d="M216 238l18-30h40v30zM284 238v-30h34l20 30z" fill="#BFE1F5"/><circle cx="200" cy="314" r="24" fill="#2C3650"/><circle cx="330" cy="314" r="24" fill="#2C3650"/></g>
+<g transform="rotate(12 500 290)"><rect x="390" y="250" width="230" height="70" rx="18" fill="#3E8FD1"/><path d="M440 250l26-42h96l30 42z" fill="#3E8FD1"/><path d="M456 248l18-30h40v30zM524 248v-30h34l20 30z" fill="#BFE1F5"/><circle cx="440" cy="324" r="24" fill="#2C3650"/><circle cx="570" cy="324" r="24" fill="#2C3650"/></g>
+<circle cx="390" cy="200" r="30" fill="#9AA3B5" opacity=".6"/><circle cx="420" cy="165" r="36" fill="#9AA3B5" opacity=".5"/><circle cx="370" cy="150" r="24" fill="#9AA3B5" opacity=".45"/>
+<path d="M660 380l40-70 40 70z" fill="#fff" stroke="#E0473A" stroke-width="10" stroke-linejoin="round"/>`,
+marche:`<rect width="760" height="420" fill="#EAF3FB"/><rect y="320" width="760" height="100" fill="#D9CDB8"/>
+<rect x="110" y="70" width="380" height="20" fill="#7A5534"/><path d="M100 90h400l-20 60H120z" fill="#fff"/><path d="M140 90l-6 60M200 90v60M260 90v60M320 90v60M380 90v60M440 90l6 60" stroke="#E0473A" stroke-width="24"/>
+<rect x="120" y="150" width="12" height="170" fill="#7A5534"/><rect x="468" y="150" width="12" height="170" fill="#7A5534"/>
+${P(300,150,"#3E8FD1",{skin:"#E2B48C",hair:"#5A4632"})}
+<rect x="110" y="250" width="380" height="80" rx="8" fill="#B07A4C"/>
+<g fill="#F2913A"><circle cx="150" cy="248" r="16"/><circle cx="182" cy="244" r="16"/><circle cx="166" cy="228" r="16"/></g>
+<g fill="#D9473A"><circle cx="270" cy="248" r="16"/><circle cx="302" cy="246" r="16"/><circle cx="286" cy="228" r="16"/></g>
+<g fill="#F4D03F"><ellipse cx="400" cy="248" rx="18" ry="13"/><ellipse cx="434" cy="246" rx="18" ry="13"/><ellipse cx="418" cy="230" rx="18" ry="13"/></g>
+<rect x="250" y="276" width="80" height="34" rx="6" fill="#fff"/><text x="290" y="300" text-anchor="middle" font-size="18" font-weight="800" font-family="sans-serif" fill="#172033">2 €/kg</text>
+${P(600,150,"#6FB27A",{hair:"#2C2420",extra:`<path d="M565 236h70l-8 46h-54z" fill="#B07A4C"/><path d="M576 236q24-34 48 0" stroke="#7A5534" stroke-width="6" fill="none"/>`})}`,
+medecin:`<rect width="760" height="420" fill="#EEF3F8"/><rect y="320" width="760" height="100" fill="#CFD8E6"/>
+<rect x="320" y="50" width="120" height="120" rx="12" fill="#fff"/><path d="M380 78v64M348 110h64" stroke="#1B9A6A" stroke-width="22" stroke-linecap="round"/>
+<rect x="80" y="230" width="300" height="20" rx="4" fill="#8A6040"/><rect x="100" y="250" width="16" height="80" fill="#8A6040"/><rect x="344" y="250" width="16" height="80" fill="#8A6040"/>
+${P(200,150,"#FFFFFF",{skin:"#E2B48C",hair:"#8C8C8C",extra:`<path d="M186 180q14 34 28 0" stroke="#2C3650" stroke-width="4" fill="none"/><circle cx="200" cy="214" r="6" fill="#2C3650"/>`})}
+<rect x="250" y="212" width="80" height="18" rx="3" fill="#fff" stroke="#C9D2E8" stroke-width="2"/>
+<rect x="520" y="260" width="110" height="16" rx="4" fill="#5A6478"/><rect x="530" y="276" width="12" height="54" fill="#5A6478"/><rect x="608" y="276" width="12" height="54" fill="#5A6478"/>
+${P(575,140,"#D9568C",{extra:`<path d="M553 132l-18-14" stroke="#C98B5E" stroke-width="12" stroke-linecap="round"/>`})}`,
+parc:`<rect width="760" height="420" fill="#DDEFFB"/><circle cx="660" cy="80" r="44" fill="#FFD25A"/><rect y="250" width="760" height="170" fill="#8CCB7E"/>
+<rect x="96" y="120" width="26" height="150" fill="#7A5534"/><circle cx="109" cy="100" r="80" fill="#4E9C5C"/>
+<path d="M220 330l220-10 30 70-260 10z" fill="#E0473A"/><path d="M250 330l10 70M300 328l10 70M350 326l10 70M400 324l10 70" stroke="#fff" stroke-width="8" opacity=".7"/>
+${P(290,200,"#3E8FD1",{hair:"#2C2420"})}${P(380,200,"#D9568C",{hair:"#2C2420"})}
+<g transform="translate(560 230) scale(.7)">${P(0,0,"#F2A93B",{hair:"#2C2420"})}</g><circle cx="630" cy="350" r="22" fill="#fff" stroke="#2B46C9" stroke-width="5"/>`
+};
+function scene(key, label){ return `<svg viewBox="0 0 760 420" role="img" aria-label="${label}">${SC[key]||""}</svg>`; }
+const SCLBL = {feu:"Une cuisine : une poêle prend feu sur la cuisinière, de la fumée monte.",malaise:"Une rue : un homme est allongé par terre, une femme téléphone.",accident:"Une route : deux voitures accidentées, de la fumée, un triangle de signalisation.",marche:"Un marché : un vendeur derrière un étal de fruits, une cliente avec un panier.",medecin:"Un cabinet médical : un médecin à son bureau, une patiente assise qui se tient la tête.",parc:"Un parc ensoleillé : deux parents près d'une couverture de pique-nique, un enfant et un ballon."};
+/* ================= ÉTAT & STOCKAGE ================= */
+const LS_KEY = "prepa-ofii-v1";
+const DEF = {v:1,onb:false,testDate:"",lang:"",slow:false,day:1,hist:[],wrong:{},seen:{},fdone:{},cur:null};
+let S = load();
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function load(){ try{ const r = localStorage.getItem(LS_KEY); if(r){ const o = JSON.parse(r); if(o && o.v) return Object.assign(clone(DEF), o); } }catch(e){} return clone(DEF); }
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){} }
+const V = {view: S.onb ? "home" : "onboard", from: "home", fq:{}, model:{}, rep:null, confirmReset:false};
+
+/* ================= OUTILS ================= */
+const $ = s => document.querySelector(s);
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+function todayISO(d){ d = d || new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function fmtDate(iso, opt){ try{ return new Date(iso+"T12:00:00").toLocaleDateString("fr-FR", opt || {weekday:"long",day:"numeric",month:"long"}); }catch(e){ return iso; } }
+function mmss(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+let toastT;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("on"), 3600); }
+const SK = {CE:"Lire", CO:"Écouter", EE:"Écrire", EO:"Parler"};
+function skillLabel(it){ if(it.t==="qcm" && it.s==="EE") return "Grammaire et vocabulaire"; if(it.t==="write") return "Expression écrite"; if(it.t==="image") return "Décrire une image"; if(it.s==="EO") return "Expression orale"; if(it.s==="CO") return "Compréhension orale"; return "Compréhension écrite"; }
+
+/* ================= ICÔNES ================= */
+const I = {
+ home:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>',
+ book:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>',
+ target:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+ chart:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+ play:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+ playL:'<svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+ check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
+ x:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ left:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+ right:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+ mic:'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+ stop:'<svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg>',
+ speaker:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>',
+ replay:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>',
+ dl:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>',
+ info:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>',
+ flame:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4 3 7 7 7z"/></svg>'
+};
+
+/* ================= VOIX (synthèse vocale) ================= */
+let VOICES = [];
+function loadVoices(){ try{ const all = speechSynthesis.getVoices() || []; const fr = all.filter(v => /^fr/i.test(v.lang));
+ const score = v => (/premium|enhanced|amélioré|natural|neural/i.test(v.name)?10:0) + (/fr[-_]FR/i.test(v.lang)?5:0) + (/amélie|thomas|audrey|aurélie|google/i.test(v.name)?3:0);
+ VOICES = fr.sort((a,b)=>score(b)-score(a)); }catch(e){ VOICES = []; } }
+try{ if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; } }catch(e){}
+function say(text, slow){
+ if(!("speechSynthesis" in window)){ toast("La lecture à voix haute n'est pas disponible sur cet appareil."); return; }
+ try{ speechSynthesis.cancel(); if(!VOICES.length) loadVoices();
+  const rate = (slow===undefined ? S.slow : slow) ? 0.72 : 0.95;
+  const lines = String(text).split("\n").map(l=>l.trim()).filter(Boolean);
+  let alt = 0;
+  lines.forEach(line => {
+   const dia = /^[—–-]\s*/.test(line); const clean = line.replace(/^[—–-]\s*/,"").replace(/…/g,"...");
+   const u = new SpeechSynthesisUtterance(clean); u.lang = "fr-FR"; u.rate = rate;
+   if(VOICES.length){ u.voice = (dia && VOICES.length>1) ? VOICES[alt % 2] : VOICES[0]; }
+   if(dia) alt++;
+   speechSynthesis.speak(u);
+  });
+ }catch(e){ toast("Impossible de lire le texte."); }
+}
+
+/* ================= ENREGISTREMENT & DICTÉE ================= */
+let REC = null; const RECS = {};
+function setAns(id, patch){ if(!S.cur) return; S.cur.ans[id] = Object.assign(S.cur.ans[id]||{}, patch); save(); }
+async function startRec(id){
+ if(REC){ stopRec(); return; }
+ const ta = document.querySelector('textarea[data-ans="'+id+'"]');
+ const r = {id, chunks:[], t0:Date.now(), base: ta ? ta.value.trim() : "", mr:null, sr:null, stream:null};
+ let ok = false;
+ try{
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder){
+   const st = await navigator.mediaDevices.getUserMedia({audio:true});
+   const mr = new MediaRecorder(st); r.mr = mr; r.stream = st;
+   mr.ondataavailable = e => { if(e.data && e.data.size) r.chunks.push(e.data); };
+   mr.onstop = () => { try{ const blob = new Blob(r.chunks, {type: mr.mimeType || "audio/mp4"}); if(RECS[id]) URL.revokeObjectURL(RECS[id]); RECS[id] = URL.createObjectURL(blob); }catch(e){} try{ st.getTracks().forEach(t=>t.stop()); }catch(e){} if(V.view==="session") render(false); };
+   mr.start(); ok = true;
+  }
+ }catch(e){}
+ const SRC = window.SpeechRecognition || window.webkitSpeechRecognition;
+ if(SRC){ try{
+  const sr = new SRC(); sr.lang = "fr-FR"; sr.continuous = true; sr.interimResults = true;
+  sr.onresult = ev => { let txt = ""; for(let k=0;k<ev.results.length;k++) txt += ev.results[k][0].transcript; txt = ((r.base ? r.base+" " : "") + txt.trim()).trim();
+   const t = document.querySelector('textarea[data-ans="'+id+'"]'); if(t) t.value = txt; setAns(id, {text: txt}); };
+  sr.onerror = () => {}; sr.start(); r.sr = sr; ok = true;
+ }catch(e){} }
+ if(!ok){ toast("Micro indisponible ici. Touche la case de texte, puis la touche micro du clavier pour dicter."); if(ta) ta.focus(); return; }
+ REC = r;
+ r.timer = setInterval(() => { const s = Math.floor((Date.now()-r.t0)/1000); const el = $("#rectime"); if(el) el.textContent = mmss(Math.min(s,60))+" / 1:00"; if(s>=60) stopRec(); }, 250);
+ render(false);
+}
+function stopRec(){ const r = REC; if(!r) return; REC = null; clearInterval(r.timer);
+ try{ if(r.mr && r.mr.state !== "inactive") r.mr.stop(); }catch(e){} try{ if(r.sr) r.sr.stop(); }catch(e){}
+ render(false); }
+
+/* ================= PROGRAMME & SÉLECTION ================= */
+function fichesForDay(d){ if(d<=PROGRAM.length) return PROGRAM[d-1]; return weakFiches(3, d); }
+function weakFiches(n, d){ const cnt = {}; Object.keys(S.wrong).forEach(id => { const it = BY[id]; if(it) cnt[it.f] = (cnt[it.f]||0) + S.wrong[id]; });
+ const r = Object.keys(cnt).map(Number).sort((a,b)=>cnt[b]-cnt[a]).slice(0,n);
+ let k = 0; while(r.length < n){ const f = ((d||S.day)*3 + k) % FICHES.length + 1; if(!r.includes(f)) r.push(f); k++; }
+ return r; }
+function pick(fn, n, fset, used, pref){
+ const pool = BANK.filter(it => fn(it) && !used.has(it.id));
+ pool.forEach(it => { it._w = Math.random()*2 + (S.seen[it.id]?0:2) + (fset.has(it.f)?3:0) + (S.wrong[it.id]?4:0) + (pref && pref.includes(it.id) ? 100 : 0); });
+ pool.sort((a,b) => b._w - a._w);
+ const r = pool.slice(0, n); r.forEach(it => used.add(it.id)); return r.map(it => it.id);
+}
+const isQ = s => it => it.t==="qcm" && it.s===s;
+function newSession(mode){
+ const used = new Set();
+ if(mode === "sim"){
+  const fset = new Set(weakFiches(4));
+  const ecrit = [].concat(pick(isQ("CE"),4,fset,used), pick(isQ("EE"),3,fset,used), pick(it=>it.t==="write",1,fset,used));
+  const oral = [].concat(pick(it=>it.t==="speak",5,new Set([1,3,2]),used,["o1","o2","o3"]), pick(it=>it.t==="image",2,fset,used));
+  S.cur = {mode, day:S.day, items: ecrit.concat(oral), split: ecrit.length, i:0, ans:{}, t0:Date.now()};
+ } else {
+  const fset = new Set(fichesForDay(S.day));
+  const items = [].concat(pick(isQ("CE"),4,fset,used), pick(isQ("CO"),4,fset,used), pick(isQ("EE"),2,fset,used), pick(it=>it.t==="write",1,fset,used), pick(it=>it.t==="speak",3,fset,used), pick(it=>it.t==="image",1,fset,used));
+  S.cur = {mode:"daily", day:S.day, items, i:0, ans:{}, t0:Date.now()};
+ }
+ V.model = {}; save();
+}
+
+/* ================= STATISTIQUES ================= */
+function repStats(rep){
+ const q = {CE:[0,0], CO:[0,0], EE:[0,0]}, errors = [], writes = [], orals = [], fset = new Set();
+ rep.items.forEach(({id, a}) => { const it = BY[id]; if(!it) return;
+  if(it.t === "qcm"){ q[it.s][1]++; if(a && a.ok) q[it.s][0]++; else { errors.push({it, a}); fset.add(it.f); } }
+  else if(it.t === "write") writes.push({it, text: a && a.text ? a.text.trim() : ""});
+  else orals.push({it, text: a && a.text ? a.text.trim() : ""});
+ });
+ const c = q.CE[0]+q.CO[0]+q.EE[0], t = q.CE[1]+q.CO[1]+q.EE[1];
+ return {q, c, t, errors, writes, orals, fiches: [...fset].sort((a,b)=>a-b)};
+}
+function totals(){ const g = {CE:[0,0], CO:[0,0], EE:[0,0]}; let orals = 0;
+ S.hist.forEach(r => { const st = repStats(r); ["CE","CO","EE"].forEach(k => { g[k][0]+=st.q[k][0]; g[k][1]+=st.q[k][1]; }); orals += st.orals.filter(o=>o.text).length; });
+ return {g, orals}; }
+function streak(){ const days = new Set(S.hist.map(h => h.date)); let d = new Date(); if(!days.has(todayISO(d))) d.setDate(d.getDate()-1); let n = 0; while(days.has(todayISO(d))){ n++; d.setDate(d.getDate()-1); } return n; }
+function doneToday(){ return S.hist.some(h => h.mode==="daily" && h.date===todayISO()); }
+
+/* ================= VUES ================= */
+function render(scroll){
+ const app = $("#app"); let h = "";
+ switch(V.view){
+  case "onboard": h = vOnboard(); break;
+  case "home": h = vHome(); break;
+  case "fiches": h = vFiches(); break;
+  case "fiche": h = vFiche(V.fiche); break;
+  case "train": h = vTrain(); break;
+  case "session": h = S.cur ? vSession() : vHome(); break;
+  case "report": h = vReport(V.rep); break;
+  case "bilan": h = vBilan(); break;
+  default: h = vHome();
+ }
+ app.innerHTML = h;
+ app.classList.toggle("focus", V.view==="session" || V.view==="onboard");
+ renderNav();
+ if(scroll !== false) window.scrollTo(0,0);
+}
+function renderNav(){
+ const nav = $("#nav"); const hide = V.view==="session" || V.view==="onboard"; nav.classList.toggle("hide", hide); if(hide){ nav.innerHTML=""; return; }
+ const tab = {home:"home", fiches:"fiches", fiche:"fiches", train:"train", report:"bilan", bilan:"bilan"}[V.view] || "home";
+ const b = (k,l,ic) => `<button type="button" data-a="tab" data-v="${k}" class="${tab===k?"on":""}" ${tab===k?'aria-current="page"':""}>${ic}${l}</button>`;
+ nav.innerHTML = b("home","Accueil",I.home)+b("fiches","Apprendre",I.book)+b("train","S'entraîner",I.target)+b("bilan","Bilan",I.chart);
+}
+
+function vOnboard(){
+ return `<div class="stack">
+ <div class="stack s"><span class="kicker">Bienvenue</span><h1>Prépa OFII &amp; TCF A2</h1>
+ <p class="muted" style="font-size:18px">Chaque jour : de courtes fiches pour apprendre, puis 15 questions (lire, écouter, écrire, parler). À la fin, tu exportes un PDF à envoyer à Claude pour la correction.</p></div>
+ <div class="card stack">
+  <div><label class="lbl" for="setDate">Date du test à l'OFII (facultatif)</label><input type="date" id="setDate" value="${esc(S.testDate)}"></div>
+  <div><label class="lbl" for="setLang">Langue pour les explications de Claude (facultatif)</label><input type="text" id="setLang" value="${esc(S.lang)}" placeholder="ex. arabe, anglais, turc… (vide = français simple)"></div>
+  <div class="tip">${I.info}<span>Conseil iPad : dans Safari, touche Partager puis « Sur l'écran d'accueil » pour ouvrir l'application en plein écran. Ouvre-la toujours de la même façon pour garder ta progression.</span></div>
+  <button type="button" class="btn pri big" data-a="onbDone">Commencer</button>
+ </div></div>`;
+}
+
+function vHome(){
+ const d = S.day, fl = fichesForDay(d), dt = doneToday();
+ let cd = "";
+ if(S.testDate){ const diff = Math.round((new Date(S.testDate+"T12:00:00") - new Date(todayISO()+"T12:00:00"))/864e5);
+  cd = `<div class="countdown"><small>Test OFII</small><b>${diff>0?"J-"+diff:(diff===0?"Jour J":"Fait")}</b><small>${diff>=0?esc(fmtDate(S.testDate,{day:"numeric",month:"short"})):"Objectif TCF A2"}</small></div>`; }
+ const steps = []; let curSet = false;
+ fl.forEach(n => { const f = FBY[n]; const done = !!S.fdone[n]; steps.push({cls: done?"done":"", n: done?I.check:steps.length+1, t:"Fiche "+n+" · "+f.t, s:"Apprendre · 5 min"+(done?" · terminé":""), a:'data-a="openFiche" data-v="'+n+'"'}); });
+ const inProg = S.cur && S.cur.mode==="daily";
+ steps.push({cls: dt && !inProg ? "done":"", n: dt && !inProg ? I.check : steps.length+1, t: inProg ? "Reprendre l'entraînement ("+(S.cur.i+1)+"/"+S.cur.items.length+")" : (dt ? "Séance bonus · 15 questions" : "Entraînement · 15 questions"), s: dt && !inProg ? "Séance du jour terminée" : "Les 4 compétences · ≈ 20 min", a:'data-a="startDaily"'});
+ steps.push({cls:"", n: steps.length+1, t:"Exporter mon bilan en PDF", s:"À envoyer à Claude pour la correction", a:'data-a="tab" data-v="bilan"'});
+ steps.forEach(s => { if(!curSet && s.cls!=="done"){ s.cls="cur"; curSet = true; } });
+ const stepsH = steps.map(s => `<button type="button" class="step ${s.cls}" ${s.a}><span class="n">${s.n}</span><span class="grow"><span class="t">${esc(s.t)}</span><span class="s">${esc(s.s)}</span></span>${s.cls==="cur"?'<span class="go">Commencer</span>':""}</button>`).join("");
+ const tt = totals(); const bar = (l,k) => { const [c,t] = tt.g[k]; const p = t ? Math.round(c/t*100) : 0;
+  return `<div class="stack s" style="gap:6px"><div class="row between" style="font-size:15px;font-weight:600"><span>${l}</span><span class="muted">${t?p+" %":"—"}</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`; };
+ const st = streak(); let dots = ""; for(let i=0;i<7;i++) dots += `<i class="${i<Math.min(st,7)?"on":""}"></i>`;
+ return `<div class="stack">
+ <div class="row between" style="align-items:flex-start">
+  <div class="stack s" style="gap:6px"><p class="muted" style="font-weight:600">${esc(fmtDate(todayISO()))}</p><h1>Bonjour !</h1><p class="muted" style="font-size:18px">${d<=7?"Jour "+d+" sur 7 de ta préparation":"Jour "+d+" · révision et objectif TCF A2"}</p></div>${cd}
+ </div>
+ <div class="hero"><div class="row between"><h2>Programme du jour</h2><span class="chip" style="background:rgba(255,255,255,.18);color:#fff">≈ 35 min</span></div>${stepsH}</div>
+ <div class="grid2">
+  <div class="card stack" style="gap:16px"><h3>Mon niveau par compétence</h3>${bar("Lire","CE")}${bar("Écouter","CO")}${bar("Grammaire","EE")}
+   <div class="row between" style="font-size:15px;font-weight:600"><span>Parler</span><span class="muted">${tt.orals} réponse${tt.orals>1?"s":""} enregistrée${tt.orals>1?"s":""}</span></div></div>
+  <div class="stack" style="gap:16px">
+   <div class="card stack s" style="background:var(--warm)"><div class="row" style="gap:10px">${I.flame}<h3 style="color:var(--warm-d)">${st} jour${st>1?"s":""} d'affilée</h3></div><div class="streak" aria-hidden="true">${dots}</div></div>
+   <button type="button" class="card stack s" data-a="startSim" style="border:2px dashed #C9D2E8;text-align:left;font-size:inherit;color:inherit"><span class="kicker" style="color:var(--bad)">Mode Jour J</span><h3>Simulation du test OFII</h3><span class="muted" style="font-size:15px">20 min d'écrit + l'entretien oral, comme en vrai.</span></button>
+  </div>
+ </div></div>`;
+}
+
+function vFiches(){
+ let h = `<div class="stack"><div class="stack s"><h1>Apprendre</h1><p class="muted" style="font-size:18px">22 fiches courtes avec des exemples à écouter. Les fiches du jour sont dans le programme de l'accueil.</p></div>`;
+ CATS.forEach((c,ci) => { h += `<div class="stack s"><span class="kicker">${esc(c)}</span><div class="grid2" style="gap:12px">` + FICHES.filter(f=>f.c===ci).map(f =>
+  `<button type="button" class="fcard ${S.fdone[f.n]?"done":""}" data-a="openFiche" data-v="${f.n}"><span class="fn">${S.fdone[f.n]?I.check:f.n}</span><span class="grow"><b>${esc(f.t)}</b><small>${esc(f.d)}</small></span></button>`).join("") + `</div></div>`; });
+ return h + `</div>`;
+}
+
+function vFiche(n){
+ const f = FBY[n];
+ const ess = f.e.map((e,i) => `<div class="ess"><span class="num">${i+1}</span><p>${e}</p></div>`).join("");
+ const ex = f.x.map((x,i) => `<div class="ex"><button type="button" class="ibtn ${i===0?"pri":""}" data-a="say" data-say="${esc(x)}" aria-label="Écouter : ${esc(x)}">${I.play}</button><span>${esc(x)}</span></div>`).join("");
+ const quiz = f.q.map((q,i) => { const k = n+":"+i, ch = V.fq[k];
+  const opts = q[1].map((o,j) => { let cls = ""; if(ch!==undefined){ if(j===q[2]) cls="ok"; else if(j===ch) cls="bad"; }
+   return `<button type="button" class="opt sm ${cls}" data-a="fq" data-v="${k}:${j}" ${ch!==undefined?"disabled":""}>${esc(o)}</button>`; }).join("");
+  return `<div class="stack s"><p style="font-size:19px;font-weight:700">${i+1}. ${esc(q[0])}</p><div class="grid3">${opts}</div></div>`; }).join("");
+ return `<div class="stack">
+ <div class="row between"><button type="button" class="back" data-a="back">${I.left}${V.from==="session"?"Retour à la question":(V.from==="home"?"Accueil":"Fiches")}</button></div>
+ <div class="stack s" style="gap:8px"><span class="kicker">Fiche ${n} · ${esc(CATS[f.c])}</span><h1>${esc(f.t)}</h1><p class="muted" style="font-size:17px">5 minutes · ${esc(f.d)}</p></div>
+ <div class="card stack s" style="gap:14px"><h2>L'essentiel</h2>${ess}</div>
+ <div class="card stack s" style="gap:6px"><div class="row between"><h2>Exemples à écouter</h2><button type="button" class="btn soft" style="min-height:44px;padding:0 14px;font-size:15px" data-a="toggleSlow">${S.slow?"Voix lente":"Voix normale"}</button></div>${ex}</div>
+ <div class="retenir"><button type="button" class="ibtn" data-a="say" data-say="${esc(f.r.replace(/…/g,""))}" aria-label="Écouter la phrase à retenir" style="background:rgba(255,255,255,.15);color:#fff">${I.play}</button><div><span class="kicker">Phrase à retenir</span><p>« ${esc(f.r)} »</p></div></div>
+ <div class="card stack"><h2>Vérifier</h2>${quiz}</div>
+ <button type="button" class="btn pri big" data-a="ficheDone" data-v="${n}">${S.fdone[n]?"Fiche terminée ✓ — retour":"J'ai terminé cette fiche"}</button>
+ </div>`;
+}
+
+function vTrain(){
+ const inProg = S.cur;
+ return `<div class="stack"><div class="stack s"><h1>S'entraîner</h1><p class="muted" style="font-size:18px">15 questions par jour sur les 4 compétences. Tes erreurs reviennent les jours suivants.</p></div>
+ ${inProg ? `<button type="button" class="hero" data-a="resume" style="border:none;text-align:left;font-size:inherit"><span class="kicker" style="color:#DCE3FF">En cours</span><h2>Reprendre ${S.cur.mode==="sim"?"la simulation":"la séance"} (${S.cur.i+1}/${S.cur.items.length})</h2><span class="btn light" style="align-self:flex-start">Continuer ${I.right}</span></button>` : ""}
+ <button type="button" class="card stack s" data-a="startDaily" style="border:none;text-align:left;font-size:inherit;color:inherit"><span class="kicker">Séance du jour</span><h2>15 questions · ≈ 20 min</h2><p class="muted">4 lire · 4 écouter · 2 grammaire · 1 écrit · 3 oral · 1 image</p></button>
+ <button type="button" class="card stack s" data-a="startSim" style="border:2px dashed #C9D2E8;text-align:left;font-size:inherit;color:inherit"><span class="kicker" style="color:var(--bad)">Mode Jour J</span><h2>Simulation du test OFII</h2><p class="muted">Partie écrite (20 min) puis entretien oral : présentation, questions, 2 images à décrire.</p></button>
+ <div class="tip">${I.info}<span>Le test de l'OFII n'est pas un examen : il sert à connaître ton niveau. Réponds naturellement. Ce qui compte vraiment, c'est d'atteindre le niveau A2 pour le TCF.</span></div>
+ </div>`;
+}
+
+function vSession(){
+ const c = S.cur, id = c.items[c.i], it = BY[id], a = c.ans[id] || {}, total = c.items.length;
+ const pct = Math.round(c.i/total*100);
+ let chips = `<span class="chip ${it.s==="EO"?"o":""}">${esc(skillLabel(it))}</span>`;
+ if(c.mode==="sim") chips += c.i < c.split ? `<span class="chip w" id="simt">Partie écrite · ${mmss(Math.floor((Date.now()-c.t0)/1000))} / 20:00</span>` : `<span class="chip w">Partie orale · l'entretien</span>`;
+ else chips += `<span class="chip w">Jour ${c.day}</span>`;
+ let body = "";
+ if(it.t === "qcm") body = qQcm(it, a);
+ else if(it.t === "write") body = qWrite(it, a);
+ else body = qSpeak(it, a);
+ return `<div class="stack">
+ <div class="row" style="gap:16px"><button type="button" class="iconbtn" data-a="quit" aria-label="Quitter (la séance est gardée)">${I.x}</button><div class="progress" role="progressbar" aria-valuenow="${c.i}" aria-valuemax="${total}" aria-label="Progression"><i style="width:${pct}%"></i></div><b style="font-size:17px">${c.i+1} / ${total}</b></div>
+ <div class="row wrap" style="gap:10px">${chips}</div>
+ ${body}</div>`;
+}
+function qQcm(it, a){
+ const answered = a.choice !== undefined;
+ let top = "";
+ if(it.doc){ const d = DOCS[it.doc]; top = `<div class="doc"><span class="dk">${esc(d.k)}</span>${esc(d.b)}</div>`; }
+ if(it.au){ top = `<div class="card player"><p class="muted" style="font-size:17px;text-align:center">Écoutez le message, puis répondez. Vous pouvez réécouter.</p>
+  <button type="button" class="playbig" data-a="sayItem" aria-label="Écouter le message">${I.playL}</button>
+  <div class="seg"><button type="button" data-a="sayItem">${I.replay} Réécouter</button><button type="button" class="${S.slow?"on":""}" data-a="setSlow" data-v="1">Lent</button><button type="button" class="${S.slow?"":"on"}" data-a="setSlow" data-v="0">Normal</button></div></div>`; }
+ const L = ["A","B","C","D"];
+ const opts = it.o.map((o,j) => { let cls = "", mark = L[j]; if(answered){ if(j===it.a){ cls="ok"; mark=I.check; } else if(j===a.choice){ cls="bad"; } }
+  return `<button type="button" class="opt ${cls}" data-a="ans" data-v="${j}" ${answered?"disabled":""}><span class="l">${mark}</span><span>${esc(o)}</span></button>`; }).join("");
+ let fb = "";
+ if(answered){ const ok = a.ok; const f = FBY[it.f];
+  fb = `<div class="fb ${ok?"ok":"bad"}"><span class="h">${ok?"Bravo, c'est juste !":"Pas tout à fait."}</span>${ok?"":`<p>La bonne réponse : <b>${esc(it.o[it.a])}</b></p>`}
+  ${it.au?`<p><b>Le message :</b><br>${esc(it.au).replace(/\n/g,"<br>")}</p>`:""}
+  ${f?`<button type="button" class="lnk" data-a="openFiche" data-v="${f.n}">Revoir la fiche ${f.n} · ${esc(f.t)}</button>`:""}</div>
+  <button type="button" class="btn pri big" data-a="next">${S.cur.i+1>=S.cur.items.length?"Voir mon bilan":"Question suivante"} ${I.right}</button>`; }
+ return `${top}<h2 class="q">${esc(it.q)}</h2><div class="opts">${opts}</div>${fb}`;
+}
+function qWrite(it, a){
+ return `<div class="card stack"><span class="kicker">Consigne</span><h2 class="q" style="font-size:23px">${esc(it.q)}</h2>
+ <div><label class="lbl" for="ta-${it.id}">Votre texte</label><textarea id="ta-${it.id}" data-ans="${it.id}" rows="6" placeholder="Écrivez ici… (des phrases simples suffisent)">${esc(a.text||"")}</textarea></div>
+ <div class="tip">${I.info}<span>Écris 3 à 4 phrases simples. Ton texte sera dans le PDF : Claude le corrigera.</span></div></div>
+ ${modelBlock(it)}
+ <div class="row wrap"><button type="button" class="btn soft" data-a="toggleModel">${V.model[it.id]?"Cacher l'exemple":"Voir un exemple"}</button></div>
+ <button type="button" class="btn pri big" data-a="validate">Valider ${I.right}</button>`;
+}
+function modelBlock(it){ if(!V.model[it.id]) return ""; return `<div class="model"><button type="button" class="ibtn pri" data-a="say" data-say="${esc(it.m)}" aria-label="Écouter l'exemple">${I.play}</button><div><b>Exemple de réponse</b><br>${esc(it.m)}</div></div>`; }
+function qSpeak(it, a){
+ const rec = REC && REC.id === it.id;
+ let top = "";
+ if(it.t === "image"){
+  top = `<div class="scene">${scene(it.sc, SCLBL[it.sc])}</div>`;
+ }
+ const helpers = it.t==="image" ? `<div class="card stack s"><b>Phrases pour vous aider</b><div class="helpers"><span>Je vois…</span><span>Il y a…</span><span>À gauche / à droite…</span><span>${it.urg?"Il faut appeler le…":"Les personnes sont en train de…"}</span></div>
+  ${it.urg?`<div class="urg"><div><b>18</b><span>Pompiers</span></div><div><b>15</b><span>SAMU</span></div><div><b>17</b><span>Police</span></div><div><b>112</b><span>Urgences</span></div></div>`:""}</div>` : "";
+ return `${top}
+ <div class="card row" style="gap:18px"><button type="button" class="ibtn" style="width:56px;height:56px" data-a="say" data-say="${esc(it.q)}" aria-label="Écouter la question">${I.speaker}</button><h2 class="q" style="font-size:24px">${esc(it.q)}</h2></div>
+ ${helpers}
+ <div class="recbox"><button type="button" class="recbtn ${rec?"on":""}" data-a="rec" aria-label="${rec?"Arrêter l'enregistrement":"M'enregistrer"}">${rec?I.stop:I.mic}</button>
+  ${rec?`<span class="rect" id="rectime">0:00 / 1:00</span><small>Enregistrement… parle naturellement, puis touche le bouton pour arrêter.</small>`:`<span class="rect">Répondre à l'oral</span><small>Touche le micro et réponds en 1 minute maximum.</small>`}</div>
+ <div class="card stack s"><label class="lbl" for="ta-${it.id}" style="margin:0">Ce que vous avez dit</label>
+  <textarea id="ta-${it.id}" data-ans="${it.id}" rows="4" placeholder="La transcription s'écrit ici. Sinon, touche cette case puis le micro du clavier pour dicter.">${esc(a.text||"")}</textarea>
+  <div class="tip">${I.info}<span>Texte faux ou vide ? Touche la case, puis la touche micro du clavier de l'iPad pour dicter ta réponse.</span></div></div>
+ ${modelBlock(it)}
+ <div class="grid3">${RECS[it.id]?`<button type="button" class="btn" data-a="playRec">${I.play} Me réécouter</button>`:""}<button type="button" class="btn" data-a="clearAns">${I.replay} Recommencer</button><button type="button" class="btn soft" data-a="toggleModel">${V.model[it.id]?"Cacher l'exemple":"Voir un exemple"}</button></div>
+ <button type="button" class="btn pri big" data-a="validate">Valider ma réponse ${I.right}</button>`;
+}
+
+function ring(c,t){ const r = 58, L = 2*Math.PI*r, p = t ? c/t : 0;
+ return `<svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Score : ${c} sur ${t}"><circle cx="70" cy="70" r="${r}" fill="none" stroke="#E7ECFF" stroke-width="16"/><circle cx="70" cy="70" r="${r}" fill="none" stroke="#2B46C9" stroke-width="16" stroke-linecap="round" stroke-dasharray="${(L*p).toFixed(1)} ${L.toFixed(1)}" transform="rotate(-90 70 70)"/><text x="70" y="79" text-anchor="middle" font-size="30" font-weight="800" fill="#172033" style="font-family:inherit">${c}/${t}</text></svg>`; }
+function vReport(rep){
+ if(!rep) return vBilan();
+ const st = repStats(rep), ratio = st.t ? st.c/st.t : 0;
+ const msg = ratio>=0.8 ? "Excellent travail !" : ratio>=0.6 ? "Très bien, continue !" : "Bon travail, on progresse !";
+ const nW = st.writes.filter(w=>w.text).length, nO = st.orals.filter(o=>o.text).length;
+ const sk = (l,k) => `<div class="stat"><span>${l}</span><b>${st.q[k][0]}/${st.q[k][1]}</b></div>`;
+ const fl = st.fiches.length ? st.fiches.map(n => `<button type="button" class="hist" data-a="openFiche" data-v="${n}"><span style="font-weight:600">Fiche ${n} · ${esc(FBY[n].t)}</span><span style="color:var(--pri);font-weight:700">Ouvrir</span></button>`).join("") : `<p class="muted">Aucune erreur aux QCM : bravo !</p>`;
+ return `<div class="stack">
+ <div class="card row wrap" style="gap:26px"><div>${ring(st.c,st.t)}</div><div class="stack s grow" style="gap:8px;min-width:220px"><span class="kicker" style="color:var(--ok)">${rep.mode==="sim"?"Simulation terminée":"Jour "+rep.day+" terminé"}</span><h1>${msg}</h1><p class="muted" style="font-size:17px">${esc(fmtDate(rep.date))} · ${rep.dur} min · à corriger : ${nW} texte${nW>1?"s":""} écrit${nW>1?"s":""}, ${nO} réponse${nO>1?"s":""} orale${nO>1?"s":""}</p></div></div>
+ <div class="grid4">${sk("Lire","CE")}${sk("Écouter","CO")}${sk("Grammaire","EE")}<div class="stat"><span>Parler</span><b>${nO}/${st.orals.length}</b></div></div>
+ <div class="card stack s"><h2>À revoir</h2>${fl}</div>
+ <div class="export"><div class="pdfthumb" aria-hidden="true"><b>CONSIGNES POUR CLAUDE</b><i></i><i style="width:85%"></i><i style="width:70%"></i><b class="k">MES RÉPONSES</b><i></i><i style="width:90%"></i><i style="width:60%;background:#F6C9C3"></i><i style="width:80%"></i><i style="width:75%;background:#CDEBDA"></i></div>
+  <div class="stack s grow" style="gap:14px"><h2>Faire corriger par Claude</h2><p>Le PDF contient les consignes pour Claude, tes erreurs, tes textes et la transcription de tes réponses orales. Envoie-le dans une conversation avec Claude.</p>
+  <button type="button" class="btn light full" data-a="exportPdf">${I.dl} Exporter mon bilan (PDF)</button>
+  <button type="button" class="btn line-w full" data-a="copyRep">Copier le texte du bilan</button></div></div>
+ <button type="button" class="btn pri big" data-a="tab" data-v="home">Retour à l'accueil</button>
+ </div>`;
+}
+function vBilan(){
+ const last = S.hist[S.hist.length-1];
+ const list = S.hist.slice(-20).reverse().map(r => { const st = repStats(r); const idx = S.hist.indexOf(r);
+  return `<button type="button" class="hist" data-a="openRep" data-v="${idx}"><span><b>${r.mode==="sim"?"Simulation OFII":"Jour "+r.day}</b> <span class="muted">· ${esc(fmtDate(r.date,{day:"numeric",month:"short"}))}</span></span><span style="font-weight:800">${st.c}/${st.t}</span></button>`; }).join("");
+ const lastH = last ? (() => { const st = repStats(last); return `<div class="export"><div class="stack s grow" style="gap:14px"><span class="kicker" style="color:#F2A93B">Dernière séance</span><h2>${last.mode==="sim"?"Simulation OFII":"Jour "+last.day} · ${st.c}/${st.t}</h2><p>${esc(fmtDate(last.date))}. Exporte le bilan et envoie-le à Claude pour la correction.</p>
+  <div class="grid2" style="gap:10px"><button type="button" class="btn light" data-a="exportPdf" data-v="${S.hist.length-1}">${I.dl} PDF</button><button type="button" class="btn line-w" data-a="copyRep" data-v="${S.hist.length-1}">Copier le texte</button></div></div></div>`; })() : `<div class="card stack s"><h2>Pas encore de séance</h2><p class="muted">Fais ta première séance de 15 questions : ton bilan apparaîtra ici.</p><button type="button" class="btn pri" data-a="startDaily" style="align-self:flex-start">Commencer</button></div>`;
+ return `<div class="stack"><h1>Bilan</h1>${lastH}
+ ${list?`<div class="card stack s" style="gap:0"><h2 style="margin-bottom:8px">Historique</h2>${list}</div>`:""}
+ <div class="card stack s"><h2>Ma progression</h2><p class="muted">La progression est gardée dans Safari, sur cet appareil. Fais une sauvegarde de temps en temps (fichier à garder dans Fichiers ou iCloud).</p>
+  <div class="grid2" style="gap:10px"><button type="button" class="btn ghost" data-a="backup">Sauvegarder ma progression</button><button type="button" class="btn ghost" data-a="restore">Restaurer une sauvegarde</button></div></div>
+ <div class="card stack"><h2>Réglages</h2>
+  <div><label class="lbl" for="setDate">Date du test à l'OFII</label><input type="date" id="setDate" value="${esc(S.testDate)}"></div>
+  <div><label class="lbl" for="setLang">Langue pour les explications de Claude</label><input type="text" id="setLang" value="${esc(S.lang)}" placeholder="vide = français simple"></div>
+  <div><span class="lbl">Vitesse de la voix</span><div class="seg" style="justify-content:flex-start"><button type="button" class="${S.slow?"":"on"}" data-a="setSlow" data-v="0">Normale</button><button type="button" class="${S.slow?"on":""}" data-a="setSlow" data-v="1">Lente</button><button type="button" data-a="say" data-say="Bonjour, je m'appelle Amina. J'habite à Lyon.">${I.play} Tester</button></div></div>
+  <div class="tip">${I.info}<span>Voix plus naturelle sur iPad : Réglages → Accessibilité → Contenu énoncé → Voix → Français, puis télécharge une voix « améliorée ».</span></div>
+  <button type="button" class="btn danger" data-a="reset">${V.confirmReset?"Confirmer : tout effacer":"Effacer toute la progression"}</button>
+ </div></div>`;
+}
+
+/* ================= RAPPORT (texte + PDF) ================= */
+function reportBlocks(rep){
+ const st = repStats(rep), B = [], P = (t,s) => B.push({t, s: s||"p"});
+ const lang = (S.lang||"").trim();
+ P("Bilan de préparation – " + (rep.mode==="sim" ? "Simulation du test OFII" : "Jour " + rep.day), "h1");
+ P("Date : " + fmtDate(rep.date, {weekday:"long",day:"numeric",month:"long",year:"numeric"}) + " · Durée : " + rep.dur + " min", "small");
+ P("1. Consignes pour Claude", "h2");
+ P("Tu es un professeur de français langue étrangère (FLE), bienveillant, patient et précis. L'apprenante prépare (1) le test de positionnement linguistique de l'OFII (visite d'accueil du Contrat d'intégration républicaine), puis (2) la certification TCF IRN ou TEF IRN de niveau A2, exigée pour la carte de séjour pluriannuelle. Ce document est le bilan de sa séance, exporté par son application d'entraînement.");
+ P("Merci de :", "b");
+ P("1. Corriger chaque texte écrit (partie 5) : recopie la phrase corrigée, explique chaque erreur simplement (niveau A2), puis propose une version modèle naturelle.");
+ P("2. Corriger chaque réponse orale (partie 6). Ces textes viennent d'une transcription automatique ou de la dictée : un mot étrange peut venir d'un problème de prononciation. Signale-le avec prudence et explique simplement comment bien prononcer.");
+ P("3. Expliquer brièvement chaque erreur de QCM (partie 4) : pourquoi la bonne réponse est juste.");
+ P("4. Identifier ses 3 points faibles principaux, en tenant compte de l'historique (partie 2).");
+ P("5. Proposer un mini-plan pour demain : les fiches à revoir, 3 phrases utiles à apprendre par cœur, et un petit exercice de 5 questions avec les corrigés à la fin.");
+ P("6. Être encourageant, avec des phrases courtes et simples. Langue des explications : " + (lang ? lang + " (garder les exemples et les corrections en français)." : "français simple, niveau A2."));
+ P("2. Contexte", "h2");
+ P("Objectif : test de positionnement de l'OFII, puis TCF IRN / TEF IRN niveau A2.");
+ if(S.testDate){ const diff = Math.round((new Date(S.testDate+"T12:00:00") - new Date(rep.date+"T12:00:00"))/864e5); P("Date du test OFII : " + fmtDate(S.testDate,{day:"numeric",month:"long",year:"numeric"}) + (diff>0 ? " (dans " + diff + " jour" + (diff>1?"s":"") + ")" : (diff===0 ? " (aujourd'hui)" : " (déjà passé)"))); }
+ P("Séances terminées : " + S.hist.length + ".");
+ const hh = S.hist.slice(-8).map(r => { const s = repStats(r); return (r.mode==="sim"?"Simul.":"J"+r.day) + " " + s.c + "/" + s.t; }).join(" · ");
+ if(hh) P("Historique des scores QCM : " + hh);
+ const wf = weakFiches(3).map(n => "fiche " + n + " (" + FBY[n].t + ")").join(", ");
+ if(Object.keys(S.wrong).length) P("Fiches avec le plus d'erreurs (tout l'historique) : " + wf + ".");
+ P("3. Scores de la séance (QCM)", "h2");
+ P("Lire : " + st.q.CE[0] + "/" + st.q.CE[1] + "   ·   Écouter : " + st.q.CO[0] + "/" + st.q.CO[1] + "   ·   Grammaire : " + st.q.EE[0] + "/" + st.q.EE[1] + "   ·   Total : " + st.c + "/" + st.t);
+ P("4. Erreurs aux QCM", "h2");
+ if(!st.errors.length) P("Aucune erreur.");
+ st.errors.forEach(({it, a}, i) => {
+  P((i+1) + ". [" + skillLabel(it) + "] " + it.q, "b");
+  if(it.doc) P("Document : " + DOCS[it.doc].b.replace(/\n/g, " / "), "small");
+  if(it.au) P("Audio entendu : " + it.au.replace(/\n/g, " "), "small");
+  P("Sa réponse : " + (a && a.choice!==undefined ? it.o[a.choice] : "(pas de réponse)") + "   →   Bonne réponse : " + it.o[it.a] + "   (fiche " + it.f + ")");
+ });
+ P("5. Expression écrite – à corriger", "h2");
+ if(!st.writes.length) P("Pas d'expression écrite dans cette séance.");
+ st.writes.forEach(({it, text}, i) => { P("Consigne " + (i+1) + " : " + it.q, "b"); P(text ? "Son texte : « " + text + " »" : "(pas de réponse)"); });
+ P("6. Expression orale – transcriptions à corriger", "h2");
+ if(!st.orals.length) P("Pas d'expression orale dans cette séance.");
+ st.orals.forEach(({it, text}, i) => { P("Question " + (i+1) + (it.t==="image" ? " (description d'image : " + SCLBL[it.sc] + ")" : "") + " : " + it.q, "b"); P(text ? "Sa réponse : « " + text + " »" : "(pas de réponse)"); });
+ P("7. Fiches à revoir", "h2");
+ P(st.fiches.length ? st.fiches.map(n => "Fiche " + n + " – " + FBY[n].t).join(" ; ") : "Aucune en particulier.");
+ P("Généré par l'application Prépa OFII & TCF A2.", "small");
+ return B;
+}
+function reportText(rep){ return reportBlocks(rep).map(b => b.s==="h1" ? b.t.toUpperCase() : b.s==="h2" ? "\n" + b.t.toUpperCase() : b.t).join("\n"); }
+
+/* --- Mini générateur PDF (Helvetica, WinAnsi) --- */
+const CP = {0x20AC:0x80,0x201A:0x82,0x201E:0x84,0x2026:0x85,0x2020:0x86,0x2021:0x87,0x2030:0x89,0x0160:0x8A,0x2039:0x8B,0x0152:0x8C,0x017D:0x8E,0x2018:0x91,0x2019:0x92,0x201C:0x93,0x201D:0x94,0x2022:0x95,0x2013:0x96,0x2014:0x97,0x2122:0x99,0x0161:0x9A,0x203A:0x9B,0x0153:0x9C,0x017E:0x9E,0x0178:0x9F};
+function pdfStr(s){ let o = ""; for(const ch of String(s).normalize("NFC")){ let c = ch.codePointAt(0); if(c===0x202F||c===0xA0||c===0x2009) c = 0x20; if(c===0x2192) { o += "->"; continue; }
+ if(!(c<128 || (c>=0xA0 && c<=0xFF))) c = CP[c] || 63; const x = String.fromCharCode(c); o += (x==="("||x===")"||x==="\\") ? "\\"+x : x; } return o; }
+const CW = {" ":278,"!":278,'"':355,"'":191,"(":333,")":333,",":278,"-":333,".":278,"/":278,":":278,";":278,"?":556,"«":556,"»":556,"’":222,"…":1000,"–":556,"—":1000,"€":556,"%":889,"&":667,"+":584,"=":584,"I":278,"J":500,"M":833,"W":944,"m":833,"w":722,"f":278,"i":222,"j":222,"l":222,"r":333,"t":278,"c":500,"k":500,"s":500,"v":500,"x":500,"y":500,"z":500,"·":278,"→":1000,"œ":944};
+function cw(ch){ if(CW[ch]) return CW[ch]; const b = ch.normalize("NFD")[0]; if(CW[b]) return CW[b]; if(/[0-9]/.test(b)) return 556; if(/[A-Z]/.test(b)) return 700; if(/[a-z]/.test(b)) return 556; return 600; }
+function tw(s, size, bold){ let w = 0; for(const ch of s) w += cw(ch); return w*size/1000*(bold?1.08:1); }
+function wrapLine(s, size, bold, max){ const out = []; let cur = ""; s.split(/ +/).forEach(w => { const t = cur ? cur+" "+w : w; if(cur && tw(t,size,bold) > max){ out.push(cur); cur = w; } else cur = t; }); if(cur) out.push(cur); return out.length ? out : [""]; }
+function makePdf(blocks){
+ const PW = 595, PH = 842, M = 50, MAXW = PW - 2*M; const pages = []; let ops = [], y = PH - 60;
+ const sty = {h1:{f:"F2",z:17,c:"0.169 0.275 0.788",sb:0,sa:6}, h2:{f:"F2",z:12.5,c:"0.169 0.275 0.788",sb:14,sa:4}, b:{f:"F2",z:10.5,c:"0.09 0.125 0.2",sb:6,sa:1}, p:{f:"F1",z:10.5,c:"0.09 0.125 0.2",sb:2,sa:1}, small:{f:"F1",z:9,c:"0.353 0.392 0.471",sb:2,sa:1}};
+ const newPage = () => { pages.push(ops); ops = []; y = PH - 60; };
+ blocks.forEach(bl => { const s = sty[bl.s] || sty.p, lh = s.z*1.42; y -= s.sb;
+  bl.t.split("\n").forEach(par => wrapLine(par, s.z, s.f==="F2", MAXW).forEach(line => {
+   if(y - lh < 56) newPage();
+   y -= lh; ops.push(`BT /${s.f} ${s.z} Tf ${s.c} rg ${M} ${y.toFixed(1)} Td (${pdfStr(line)}) Tj ET`);
+  }));
+  if(bl.s==="h1"){ y -= 6; ops.push(`0.169 0.275 0.788 RG 1.2 w ${M} ${y.toFixed(1)} m ${PW-M} ${y.toFixed(1)} l S`); y -= 4; }
+  y -= s.sa; });
+ pages.push(ops);
+ const N = pages.length, objs = [];
+ objs[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+ objs[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+ objs[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+ const kids = [];
+ pages.forEach((p,k) => { const pid = 5 + k*2, cid = pid + 1; kids.push(pid + " 0 R");
+  const foot = `BT /F1 8.5 Tf 0.353 0.392 0.471 rg ${M} 30 Td (${pdfStr("Prépa OFII & TCF A2 – page " + (k+1) + "/" + N)}) Tj ET`;
+  const stream = p.concat([foot]).join("\n");
+  objs[pid] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${cid} 0 R >>`;
+  objs[cid] = `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`; });
+ objs[2] = `<< /Type /Pages /Kids [${kids.join(" ")}] /Count ${N} >>`;
+ let out = "%PDF-1.4\n%\xE2\xE3\xCF\xD3\n"; const offs = [];
+ for(let i=1;i<objs.length;i++){ offs[i] = out.length; out += i + " 0 obj\n" + objs[i] + "\nendobj\n"; }
+ const xref = out.length;
+ out += "xref\n0 " + objs.length + "\n0000000000 65535 f \n";
+ for(let i=1;i<objs.length;i++) out += String(offs[i]).padStart(10,"0") + " 00000 n \n";
+ out += "trailer\n<< /Size " + objs.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+ const bytes = new Uint8Array(out.length); for(let i=0;i<out.length;i++) bytes[i] = out.charCodeAt(i) & 255; return bytes;
+}
+
+/* --- Livrer un fichier : Claude (si dans un artefact) → partage iPad → téléchargement --- */
+let DL;
+async function getDL(){ if(DL !== undefined) return DL; DL = null;
+ try{ if(window.claude && typeof window.claude.use === "function"){ DL = await Promise.race([window.claude.use("downloads"), new Promise(r => setTimeout(() => r(null), 4000))]); } }catch(e){ DL = null; }
+ return DL; }
+async function deliver(name, data, mime){
+ const blob = new Blob([data], {type: mime});
+ const dl = await getDL();
+ if(dl){ try{ await dl.save({filename: name, data: blob}); toast("Fichier enregistré."); return; }catch(e){ if(e && e.code === "declined"){ toast("Enregistrement annulé."); return; } } }
+ try{ const file = new File([blob], name, {type: mime});
+  if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title: name}); return; } }
+ catch(e){ if(e && e.name === "AbortError") return; }
+ try{ const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
+  toast("Fichier prêt. Si rien ne s'ouvre, utilise « Copier le texte du bilan »."); }
+ catch(e){ toast("Export impossible ici : utilise « Copier le texte du bilan »."); }
+}
+function copyText(text){
+ const fallback = () => { const m = document.createElement("div"); m.className = "modal"; m.innerHTML = `<div class="card stack"><h2>Copier le bilan</h2><p class="muted">Sélectionne tout le texte, copie-le, puis colle-le dans une conversation avec Claude.</p><textarea readonly rows="12">${esc(text)}</textarea><button type="button" class="btn pri" data-a="closeModal">Fermer</button></div>`; document.body.appendChild(m); const t = m.querySelector("textarea"); t.focus(); t.select(); };
+ try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(() => toast("Bilan copié : colle-le dans une conversation avec Claude."), fallback); return; } }catch(e){}
+ fallback();
+}
+
+/* ================= ACTIONS ================= */
+function stopAudio(){ try{ speechSynthesis.cancel(); }catch(e){} if(REC) stopRec(); }
+function go(view, extra){ stopAudio(); V.view = view; Object.assign(V, extra||{}); render(); }
+function finish(){
+ const c = S.cur; const rep = {mode:c.mode, day:c.day, date:todayISO(), dur:Math.max(1, Math.round((Date.now()-c.t0)/60000)), items:c.items.map(id => ({id, a:c.ans[id]||null}))};
+ S.hist.push(rep); if(S.hist.length > 120) S.hist.shift();
+ if(c.mode === "daily") S.day++;
+ S.cur = null; save(); go("report", {rep});
+}
+function readSettings(){ const d = $("#setDate"), l = $("#setLang"); if(d) S.testDate = d.value || ""; if(l) S.lang = l.value.trim(); save(); }
+const ACT = {
+ tab(v){ go(v === "train" && S.cur ? "train" : v); },
+ onbDone(){ readSettings(); S.onb = true; save(); go("home"); },
+ openFiche(v){ V.from = V.view==="fiche" ? V.from : V.view; go("fiche", {fiche:+v}); },
+ back(){ go(V.from==="fiche" ? "fiches" : (V.from || "fiches")); },
+ ficheDone(v){ S.fdone[+v] = Date.now(); save(); toast("Fiche terminée ✓"); ACT.back(); },
+ fq(v){ const [n,i,j] = v.split(":").map(Number); V.fq[n+":"+i] = j; render(false); },
+ say(v,b){ say(b.dataset.say); },
+ sayItem(){ const it = BY[S.cur.items[S.cur.i]]; if(it && it.au) say(it.au); },
+ setSlow(v){ S.slow = v === "1"; save(); render(false); },
+ toggleSlow(){ S.slow = !S.slow; save(); render(false); },
+ startDaily(){ if(S.cur && S.cur.mode === "daily"){ go("session"); return; } if(S.cur && S.cur.mode === "sim"){ toast("Une simulation est en cours : on la reprend."); go("session"); return; } newSession("daily"); go("session"); },
+ startSim(){ if(S.cur){ toast("Termine d'abord la séance en cours."); go("session"); return; } newSession("sim"); go("session"); },
+ resume(){ go("session"); },
+ quit(){ toast("Séance gardée : tu pourras la reprendre."); go("home"); },
+ ans(v){ const c = S.cur, id = c.items[c.i], it = BY[id]; if(c.ans[id] && c.ans[id].choice !== undefined) return; const j = +v, ok = j === it.a;
+  c.ans[id] = {choice:j, ok}; S.seen[id] = 1; if(ok){ if(S.wrong[id]){ S.wrong[id]--; if(S.wrong[id] <= 0) delete S.wrong[id]; } } else S.wrong[id] = (S.wrong[id]||0) + 1;
+  save(); render(false); },
+ next(){ stopAudio(); const c = S.cur; c.i++; save(); if(c.i >= c.items.length) finish(); else render(); },
+ validate(){ const c = S.cur, id = c.items[c.i]; const ta = document.querySelector('textarea[data-ans="'+id+'"]'); stopAudio();
+  setAns(id, {text: ta ? ta.value : "", done:true}); S.seen[id] = 1; save(); ACT.next(); },
+ toggleModel(){ const id = S.cur.items[S.cur.i]; V.model[id] = !V.model[id]; render(false); },
+ rec(){ startRec(S.cur.items[S.cur.i]); },
+ playRec(){ const u = RECS[S.cur.items[S.cur.i]]; if(u){ try{ const au = new Audio(u); au.play().catch(() => toast("Lecture impossible.")); }catch(e){} } },
+ clearAns(){ const id = S.cur.items[S.cur.i]; if(REC) stopRec(); setAns(id, {text:""}); if(RECS[id]){ URL.revokeObjectURL(RECS[id]); delete RECS[id]; } render(false); },
+ openRep(v){ go("report", {rep: S.hist[+v]}); },
+ exportPdf(v){ const rep = v!==undefined && v!=="" ? S.hist[+v] : (V.view==="report" ? V.rep : S.hist[S.hist.length-1]); if(!rep) return;
+  readSettings(); const name = "bilan-" + (rep.mode==="sim" ? "simulation" : "jour-" + rep.day) + "-" + rep.date + ".pdf";
+  try{ deliver(name, makePdf(reportBlocks(rep)), "application/pdf"); }catch(e){ toast("Erreur PDF : utilise « Copier le texte »."); } },
+ copyRep(v){ const rep = v!==undefined && v!=="" ? S.hist[+v] : (V.view==="report" ? V.rep : S.hist[S.hist.length-1]); if(rep){ readSettings(); copyText(reportText(rep)); } },
+ closeModal(v,b){ const m = b.closest(".modal"); if(m) m.remove(); },
+ backup(){ readSettings(); const o = clone(S); deliver("prepa-ofii-sauvegarde-" + todayISO() + ".json", JSON.stringify(o), "application/json"); },
+ restore(){ $("#restoreInput").click(); },
+ reset(){ if(!V.confirmReset){ V.confirmReset = true; render(false); setTimeout(() => { V.confirmReset = false; }, 6000); return; }
+  V.confirmReset = false; S = clone(DEF); S.onb = true; save(); toast("Progression effacée."); go("home"); }
+};
+document.addEventListener("click", e => { const b = e.target.closest("[data-a]"); if(!b || b.disabled) return; const f = ACT[b.dataset.a]; if(f){ e.preventDefault(); f(b.dataset.v, b, e); } });
+document.addEventListener("input", e => { const t = e.target; if(t.dataset && t.dataset.ans) setAns(t.dataset.ans, {text: t.value}); });
+document.addEventListener("change", e => { const t = e.target; if(t.id === "setDate" || t.id === "setLang"){ readSettings(); if(V.view !== "onboard") toast("Réglage enregistré."); } });
+$("#restoreInput").addEventListener("change", e => { const f = e.target.files && e.target.files[0]; if(!f) return; const r = new FileReader();
+ r.onload = () => { try{ const o = JSON.parse(r.result); if(!o || !o.v || !Array.isArray(o.hist)) throw 0; S = Object.assign(clone(DEF), o); S.onb = true; save(); toast("Progression restaurée ✓"); go("home"); }catch(err){ toast("Ce fichier n'est pas une sauvegarde valide."); } };
+ r.readAsText(f); e.target.value = ""; });
+setInterval(() => { if(V.view === "session" && S.cur && S.cur.mode === "sim"){ const el = $("#simt"); if(el) el.textContent = "Partie écrite · " + mmss(Math.floor((Date.now()-S.cur.t0)/1000)) + " / 20:00"; } }, 1000);
+render();
+</script>
+</body>
+</html>
